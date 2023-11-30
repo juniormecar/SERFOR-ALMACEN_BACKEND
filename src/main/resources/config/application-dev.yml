@@ -1,0 +1,27 @@
+spring:
+  jackson:
+    serialization.indent_output: true
+  datasource:
+    serfor-bdsgi:
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      url: jdbc:sqlserver://10.6.0.221:1433;database=SERFOR_BDSGI;trustServerCertificate=true;
+      username: oti42
+      password: RiA948825
+    ws-serfor-bdpas:
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      jdbc-url: jdbc:sqlserver://10.6.0.221:1433;database=WS_SERFOR_BDPAS;trustServerCertificate=true;
+      username: oti42
+      password: RiA948825
+jpa:
+  #         database-platform: org.hibernate.dialect.MySQL8Dialect
+  #         database: MYSQL
+  database-platform: org.hibernate.dialect.SQLServer2012Dialect
+  database: SQL_SERVER
+  show-sql: true
+  properties:
+    hibernate.show_sql: true
+    show-sql: true
+
+login:
+  api:
+    url: 'https://ws.serfor.gob.pe/sgiseguridad'
