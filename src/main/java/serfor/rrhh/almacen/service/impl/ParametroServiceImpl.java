@@ -23,4 +23,14 @@ public class ParametroServiceImpl implements ParametroService {
     public ResultClassEntity saveParametros(List<TipoparametroEntity> lstParametros) throws Exception {
         return parametroValorRepository.saveParametros(lstParametros);
     }
+
+    @Override
+    public ResultClassEntity registrarTipoParametro(TipoparametroEntity tipoparametro) throws Exception {
+        return parametroValorRepository.registrarTipoParametro(tipoparametro);
+    }
+
+    @Override
+    public ResultClassEntity EliminarTipoParametro(Integer idTipoParametro,Integer idUsuarioElimina) throws Exception {
+        return parametroValorRepository.EliminarTipoParametro(idTipoParametro, idUsuarioElimina);
+    }
 }

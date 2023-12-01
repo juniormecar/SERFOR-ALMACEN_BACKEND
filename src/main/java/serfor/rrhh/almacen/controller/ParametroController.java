@@ -2,6 +2,8 @@ package serfor.rrhh.almacen.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import serfor.rrhh.almacen.entity.ParametroEntity;
 import serfor.rrhh.almacen.entity.ResultClassEntity;
@@ -44,6 +46,47 @@ public class ParametroController {
         } catch (Exception e) {
             log.error("ParametroController -saveParametro", "Ocurrió un error :" + e.getMessage());
             throw new Exception(e);
+        }
+    }
+
+    @PostMapping("/registrartipoParametro")
+    public ResponseEntity registrarTipoParametro(@RequestBody TipoparametroEntity tipoparametro){
+        log.info("Ingreso al metodo registrar");
+        ResponseEntity result = null;
+        ResultClassEntity response;
+
+        try{
+            response = parametroValorService.registrarTipoParametro(tipoparametro);
+            if(response.getSuccess()){
+                log.info("registrarTipoParametro - exitoso");
+                return new ResponseEntity(response, HttpStatus.OK);
+            }else {
+                return new ResponseEntity(response,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            log.error("TipoParametro -registrarTipoParametro", "Ocurrió un error :" + e.getMessage());
+            return new ResponseEntity(null,null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/eliminarTipoParametro")
+    public ResponseEntity EliminarTipoParametro(@RequestParam(required = false) Integer idTipoParametro,
+                                                @RequestParam(required = false) Integer idUsuarioElimina){
+        log.info("Ingreso al metodo eliminar");
+        ResponseEntity result = null;
+        ResultClassEntity response;
+
+        try{
+            response = parametroValorService.EliminarTipoParametro(idTipoParametro, idUsuarioElimina);
+            if(response.getSuccess()){
+                log.info("eliminar - exitoso");
+                return new ResponseEntity(response, HttpStatus.OK);
+            }else {
+                return new ResponseEntity(response,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            log.error("eliminar", "Ocurrió un error :" + e.getMessage());
+            return new ResponseEntity(null,null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

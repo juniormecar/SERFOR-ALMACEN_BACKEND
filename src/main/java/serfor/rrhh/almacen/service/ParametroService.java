@@ -10,4 +10,8 @@ public interface ParametroService {
     List<ParametroEntity> listaParametro(String prefijo) throws Exception;
 
     ResultClassEntity saveParametros(List<TipoparametroEntity> lstParametros) throws Exception;
+
+    ResultClassEntity registrarTipoParametro(TipoparametroEntity tipoparametro) throws Exception;
+
+    ResultClassEntity EliminarTipoParametro(Integer idTipoParametro,Integer idUsuarioElimina) throws Exception;
 }

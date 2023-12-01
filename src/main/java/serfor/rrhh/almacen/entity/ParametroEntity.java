@@ -18,4 +18,5 @@ public class ParametroEntity {
     private String nombre;
     private String descripcion;
     private String estado;
+    private Integer idUsuarioElimina;
 }

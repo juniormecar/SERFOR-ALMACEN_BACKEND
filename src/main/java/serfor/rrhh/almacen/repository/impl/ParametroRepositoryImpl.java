@@ -150,4 +150,62 @@ public class ParametroRepositoryImpl extends JdbcDaoSupport implements Parametro
         }
     }
 
+    @Override
+    public ResultClassEntity registrarTipoParametro(TipoparametroEntity tipoparametro) {
+        ResultClassEntity resultClassEntity = new ResultClassEntity();
+        TipoparametroEntity tipoparametroEntity = new TipoparametroEntity();
+        try {
+            StoredProcedureQuery spa = em.createStoredProcedureQuery("almacen.pa_TipoParametro_Registrar");
+            spa.registerStoredProcedureParameter("prefijo", String.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("nombre", String.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("descripcion", String.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("IdUsuarioRegistro", Integer.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("IdTipoParametro", Integer.class, ParameterMode.INOUT);
+            SpUtil.enableNullParams(spa);
+            spa.setParameter("prefijo", tipoparametro.getPrefijo());
+            spa.setParameter("nombre", tipoparametro.getNombre());
+            spa.setParameter("descripcion", tipoparametro.getDescripcion());
+            spa.setParameter("IdUsuarioRegistro", tipoparametro.getIdUsuarioRegistro());
+            spa.setParameter("IdTipoParametro", tipoparametro.getIdTipoParametro());
+            spa.execute();
+            Integer TipoParametroReturn = (Integer) spa.getOutputParameterValue("IdTipoParametro");
+            tipoparametroEntity.setIdTipoParametro(TipoParametroReturn);
+            resultClassEntity.setData(tipoparametroEntity);
+            resultClassEntity.setSuccess(true);
+            return resultClassEntity;
+
+        } catch (Exception e) {
+            resultClassEntity.setSuccess(false);
+            resultClassEntity.setMessage("Ocurrió un error.");
+            return resultClassEntity;
+        }
+    }
+
+    @Override
+    public ResultClassEntity EliminarTipoParametro(Integer idTipoParametro,Integer idUsuarioElimina) throws Exception {
+        ResultClassEntity resultClassEntity = new ResultClassEntity();
+        TipoparametroEntity tipoparametroEntity = new TipoparametroEntity();
+
+        try {
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_TipoParametro_Eliminar");
+            sp.registerStoredProcedureParameter("IdTipoParametro", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("IdUsuarioElimina", Integer.class, ParameterMode.IN);
+            SpUtil.enableNullParams(sp);
+            sp.setParameter("IdTipoParametro", idTipoParametro);
+            sp.setParameter("IdUsuarioElimina", idUsuarioElimina);
+            sp.execute();
+            tipoparametroEntity.setIdTipoParametro(tipoparametroEntity.getIdTipoParametro());
+            tipoparametroEntity.setIdUsuarioElimina(tipoparametroEntity.getIdUsuarioElimina());
+            resultClassEntity.setData(tipoparametroEntity);
+            resultClassEntity.setSuccess(true);
+            return resultClassEntity;
+
+        } catch (Exception e) {
+            log.error("Almacen - listarRecurso" + "Ocurrió un error :" + e.getMessage());
+            resultClassEntity.setSuccess(false);
+            resultClassEntity.setMessage("Ocurrió un error.");
+            return resultClassEntity;
+        }
+    }
+
 }

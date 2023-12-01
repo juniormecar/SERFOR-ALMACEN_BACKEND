@@ -11,4 +11,8 @@ public interface ParametroRepository {
 
     ResultClassEntity saveParametros(List<TipoparametroEntity> lstParametros) throws Exception;
 
+    ResultClassEntity registrarTipoParametro(TipoparametroEntity tipoparametro) throws Exception;
+
+    ResultClassEntity EliminarTipoParametro(Integer idTipoParametro,Integer idUsuarioElimina) throws Exception;
+
 }
