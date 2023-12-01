@@ -23,4 +23,7 @@ public class PuestoControlEntity {
     private String zonaUTM;
     private Integer idAtf;
     private String estado;
+    private String direccion;
+
+    private String nombreATF;
 }
