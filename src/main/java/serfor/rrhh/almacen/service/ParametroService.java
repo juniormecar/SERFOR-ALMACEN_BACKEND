@@ -11,6 +11,8 @@ public interface ParametroService {
 
     ResultClassEntity EliminarParametro(Integer idParametro,Integer idUsuarioElimina) throws Exception;
 
+    ResultClassEntity registrarParametro(ParametroEntity parametro) throws Exception;
+
     ResultClassEntity registrarTipoParametro(TipoparametroEntity tipoparametro) throws Exception;
 
     ResultClassEntity EliminarTipoParametro(Integer idTipoParametro,Integer idUsuarioElimina) throws Exception;

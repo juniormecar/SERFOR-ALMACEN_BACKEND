@@ -178,6 +178,41 @@ public class ParametroRepositoryImpl extends JdbcDaoSupport implements Parametro
     }
 
     @Override
+    public ResultClassEntity registrarParametro(ParametroEntity parametro) {
+        ResultClassEntity resultClassEntity = new ResultClassEntity();
+        ParametroEntity parametroEntity = new ParametroEntity();
+        try {
+            StoredProcedureQuery spa = em.createStoredProcedureQuery("almacen.pa_Parametro_Registrar");
+            spa.registerStoredProcedureParameter("codigo", String.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("valorPrimario", String.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("valorSecundario", String.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("valorTerciario", String.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("idTipoParametro", Integer.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("IdUsuarioRegistro", Integer.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("idParametro", Integer.class, ParameterMode.INOUT);
+            SpUtil.enableNullParams(spa);
+            spa.setParameter("codigo", parametro.getCodigo());
+            spa.setParameter("valorPrimario", parametro.getValorPrimario());
+            spa.setParameter("valorSecundario", parametro.getValorSecundario());
+            spa.setParameter("valorTerciario", parametro.getValorTerciario());
+            spa.setParameter("idTipoParametro", parametro.getIdTipoParametro());
+            spa.setParameter("IdUsuarioRegistro", parametro.getIdUsuarioRegistro());
+            spa.setParameter("idParametro", parametro.getIdParametro());
+            spa.execute();
+            Integer ParametroReturn = (Integer) spa.getOutputParameterValue("idParametro");
+            parametroEntity.setIdParametro(ParametroReturn);
+            resultClassEntity.setData(parametroEntity);
+            resultClassEntity.setSuccess(true);
+            return resultClassEntity;
+
+        } catch (Exception e) {
+            resultClassEntity.setSuccess(false);
+            resultClassEntity.setMessage("Ocurrió un error.");
+            return resultClassEntity;
+        }
+    }
+
+    @Override
     public ResultClassEntity registrarTipoParametro(TipoparametroEntity tipoparametro) {
         ResultClassEntity resultClassEntity = new ResultClassEntity();
         TipoparametroEntity tipoparametroEntity = new TipoparametroEntity();
@@ -277,5 +312,4 @@ public class ParametroRepositoryImpl extends JdbcDaoSupport implements Parametro
         }
         return pageable;
     }
-
 }

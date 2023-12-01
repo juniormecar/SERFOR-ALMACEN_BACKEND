@@ -67,6 +67,25 @@ public class ParametroController {
             return new ResponseEntity(null,null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PostMapping("/registrarParametro")
+    public ResponseEntity registrarParametro(@RequestBody ParametroEntity parametro){
+        log.info("Ingreso al metodo registrar");
+        ResponseEntity result = null;
+        ResultClassEntity response;
+
+        try{
+            response = parametroValorService.registrarParametro(parametro);
+            if(response.getSuccess()){
+                log.info("registrarParametro - exitoso");
+                return new ResponseEntity(response, HttpStatus.OK);
+            }else {
+                return new ResponseEntity(response,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            log.error("Parametro -registrarParametro", "Ocurrió un error :" + e.getMessage());
+            return new ResponseEntity(null,null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/registrartipoParametro")
     public ResponseEntity registrarTipoParametro(@RequestBody TipoparametroEntity tipoparametro){

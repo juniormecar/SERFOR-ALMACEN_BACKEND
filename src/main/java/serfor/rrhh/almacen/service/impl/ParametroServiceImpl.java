@@ -28,6 +28,11 @@ public class ParametroServiceImpl implements ParametroService {
     }
 
     @Override
+    public ResultClassEntity registrarParametro(ParametroEntity parametro) throws Exception {
+        return parametroValorRepository.registrarParametro(parametro);
+    }
+
+    @Override
     public ResultClassEntity registrarTipoParametro(TipoparametroEntity tipoparametro) throws Exception {
         return parametroValorRepository.registrarTipoParametro(tipoparametro);
     }
