@@ -2,9 +2,7 @@ package serfor.rrhh.almacen.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import serfor.rrhh.almacen.entity.ParametroEntity;
-import serfor.rrhh.almacen.entity.ResultClassEntity;
-import serfor.rrhh.almacen.entity.TipoparametroEntity;
+import serfor.rrhh.almacen.entity.*;
 import serfor.rrhh.almacen.repository.ParametroRepository;
 import serfor.rrhh.almacen.service.ParametroService;
 
@@ -37,5 +35,10 @@ public class ParametroServiceImpl implements ParametroService {
     @Override
     public ResultClassEntity EliminarTipoParametro(Integer idTipoParametro,Integer idUsuarioElimina) throws Exception {
         return parametroValorRepository.EliminarTipoParametro(idTipoParametro, idUsuarioElimina);
+    }
+
+    @Override
+    public Pageable<List<TipoparametroEntity>> listarTipoParametro(Page page) throws Exception {
+        return parametroValorRepository.listarTipoParametro(page);
     }
 }

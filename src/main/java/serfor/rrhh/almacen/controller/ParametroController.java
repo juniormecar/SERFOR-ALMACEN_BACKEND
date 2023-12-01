@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import serfor.rrhh.almacen.entity.ParametroEntity;
-import serfor.rrhh.almacen.entity.ResultClassEntity;
-import serfor.rrhh.almacen.entity.TipoparametroEntity;
+import serfor.rrhh.almacen.entity.*;
 import serfor.rrhh.almacen.service.ParametroService;
 
 import java.util.List;
@@ -110,4 +108,23 @@ public class ParametroController {
             return new ResponseEntity(null,null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listarTipoParametro")
+    public Pageable<List<TipoparametroEntity>> listarTipoParametro (@RequestParam(required = false, defaultValue = "1") Long pageNumber,
+                                                                    @RequestParam(required = false, defaultValue = "100") Long pageSize,
+                                                                    @RequestParam(required = false) String sortField,
+                                                                    @RequestParam(required = false, defaultValue = "ASC") String sortType)
+        throws Exception {
+        log.info("ParametroController - listarTipoParametro");
+        Page p = new Page(pageNumber, pageSize, sortField, sortType);
+        try {
+            Pageable<List<TipoparametroEntity>> response = parametroValorService.listarTipoParametro(p);
+            log.info("TipoParametro - listar", "Proceso realizado correctamente");
+            return response;
+        } catch (Exception e) {
+            log.error("TipoParametro - listar", "Ocurrió un error :" + e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
 }

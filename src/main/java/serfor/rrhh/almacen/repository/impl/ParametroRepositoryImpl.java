@@ -235,4 +235,47 @@ public class ParametroRepositoryImpl extends JdbcDaoSupport implements Parametro
         }
     }
 
+    @Override
+    public Pageable<List<TipoparametroEntity>> listarTipoParametro(Page p) throws Exception {
+        try{
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_TipoParametro_Listar");
+            sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("sortField", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("sortType", String.class, ParameterMode.IN);
+            SpUtil.enableNullParams(sp);
+            sp.setParameter("pageNumber", p.getPageNumber());
+            sp.setParameter("pageSize", p.getPageSize());
+            sp.setParameter("sortField", p.getSortField());
+            sp.setParameter("sortType", p.getSortType());
+            sp.execute();
+            return setResultDataListarTipoParametro(p, sp.getResultList());
+        } catch (Exception e) {
+            log.error("listarTipoParametro" + "Ocurrió un error :" + e.getMessage());
+            return setResultDataListarTipoParametro(p, null);
+        }
+    }
+    private Pageable<List<TipoparametroEntity>> setResultDataListarTipoParametro(Page page, List<Object[]> dataDb) throws Exception {
+        Pageable<List<TipoparametroEntity>> pageable=new Pageable<>(page);
+        List<TipoparametroEntity> items = new ArrayList<>();
+        for (Object[] row : dataDb) {
+            TipoparametroEntity tipopara = new TipoparametroEntity();
+            tipopara.setIdTipoParametro((Integer) row[0]);
+            tipopara.setPrefijo((String) row[1]);
+            tipopara.setNombre((String) row[2]);
+            tipopara.setDescripcion((String) row[3]);
+            items.add(tipopara);
+            pageable.setTotalRecords(SpUtil.toLong(row[4]));
+
+        }
+        pageable.setData(items);
+        pageable.setSuccess(true);
+        if(items.size()>0){
+            pageable.setMessage("Se obtuvo data.");
+        }else{
+            pageable.setMessage("No se encontró data.");
+        }
+        return pageable;
+    }
+
 }

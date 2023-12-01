@@ -1,8 +1,6 @@
 package serfor.rrhh.almacen.repository;
 
-import serfor.rrhh.almacen.entity.ParametroEntity;
-import serfor.rrhh.almacen.entity.ResultClassEntity;
-import serfor.rrhh.almacen.entity.TipoparametroEntity;
+import serfor.rrhh.almacen.entity.*;
 
 import java.util.List;
 
@@ -16,5 +14,7 @@ public interface ParametroRepository {
     ResultClassEntity registrarTipoParametro(TipoparametroEntity tipoparametro) throws Exception;
 
     ResultClassEntity EliminarTipoParametro(Integer idTipoParametro,Integer idUsuarioElimina) throws Exception;
+
+    Pageable<List<TipoparametroEntity>> listarTipoParametro(Page page) throws Exception;
 
 }
