@@ -49,6 +49,27 @@ public class ParametroController {
         }
     }
 
+    @DeleteMapping("/eliminarParametro")
+    public ResponseEntity EliminarParametro(@RequestParam(required = false) Integer idParametro,
+                                            @RequestParam(required = false) Integer idUsuarioElimina){
+        log.info("Ingreso al metodo eliminar");
+        ResponseEntity result = null;
+        ResultClassEntity response;
+
+        try{
+            response = parametroValorService.EliminarParametro(idParametro, idUsuarioElimina);
+            if(response.getSuccess()){
+                log.info("eliminar - exitoso");
+                return new ResponseEntity(response, HttpStatus.OK);
+            }else {
+                return new ResponseEntity(response,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            log.error("eliminar", "Ocurrió un error :" + e.getMessage());
+            return new ResponseEntity(null,null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/registrartipoParametro")
     public ResponseEntity registrarTipoParametro(@RequestBody TipoparametroEntity tipoparametro){
         log.info("Ingreso al metodo registrar");

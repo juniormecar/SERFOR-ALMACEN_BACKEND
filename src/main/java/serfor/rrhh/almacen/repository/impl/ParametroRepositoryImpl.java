@@ -151,6 +151,33 @@ public class ParametroRepositoryImpl extends JdbcDaoSupport implements Parametro
     }
 
     @Override
+    public ResultClassEntity EliminarParametro(Integer idParametro,Integer idUsuarioElimina) throws Exception {
+        ResultClassEntity resultClassEntity = new ResultClassEntity();
+        ParametroEntity parametroEntity = new ParametroEntity();
+
+        try {
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Parametro_Eliminar");
+            sp.registerStoredProcedureParameter("IdParametro", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("IdUsuarioElimina", Integer.class, ParameterMode.IN);
+            SpUtil.enableNullParams(sp);
+            sp.setParameter("IdParametro", idParametro);
+            sp.setParameter("IdUsuarioElimina", idUsuarioElimina);
+            sp.execute();
+            parametroEntity.setIdParametro(parametroEntity.getIdParametro());
+            parametroEntity.setIdUsuarioElimina(parametroEntity.getIdUsuarioElimina());
+            resultClassEntity.setData(parametroEntity);
+            resultClassEntity.setSuccess(true);
+            return resultClassEntity;
+
+        } catch (Exception e) {
+            log.error("EliminarParametro" + "Ocurrió un error :" + e.getMessage());
+            resultClassEntity.setSuccess(false);
+            resultClassEntity.setMessage("Ocurrió un error.");
+            return resultClassEntity;
+        }
+    }
+
+    @Override
     public ResultClassEntity registrarTipoParametro(TipoparametroEntity tipoparametro) {
         ResultClassEntity resultClassEntity = new ResultClassEntity();
         TipoparametroEntity tipoparametroEntity = new TipoparametroEntity();

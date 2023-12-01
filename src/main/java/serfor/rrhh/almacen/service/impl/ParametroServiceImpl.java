@@ -25,6 +25,11 @@ public class ParametroServiceImpl implements ParametroService {
     }
 
     @Override
+    public ResultClassEntity EliminarParametro(Integer idParametro,Integer idUsuarioElimina) throws Exception {
+        return parametroValorRepository.EliminarParametro(idParametro, idUsuarioElimina);
+    }
+
+    @Override
     public ResultClassEntity registrarTipoParametro(TipoparametroEntity tipoparametro) throws Exception {
         return parametroValorRepository.registrarTipoParametro(tipoparametro);
     }
