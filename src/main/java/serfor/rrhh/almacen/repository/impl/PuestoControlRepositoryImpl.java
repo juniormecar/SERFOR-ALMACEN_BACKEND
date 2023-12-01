@@ -74,8 +74,9 @@ public class PuestoControlRepositoryImpl extends JdbcDaoSupport implements Puest
             pc.setZonaUTM((String) row[8]);
             pc.setIdAtf((Integer) row[9]);
             pc.setNombreATF((String) row[10]);
+            pc.setDireccion((String) row[11]);
             items.add(pc);
-            pageable.setTotalRecords(SpUtil.toLong(row[11]));
+            pageable.setTotalRecords(SpUtil.toLong(row[12]));
 
         }
         pageable.setData(items);
