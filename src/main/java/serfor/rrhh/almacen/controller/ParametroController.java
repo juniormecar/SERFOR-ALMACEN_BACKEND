@@ -22,7 +22,7 @@ public class ParametroController {
     @GetMapping("")
     public Pageable<List<ParametroEntity>> listaParametro(@RequestParam(required = false) String prefijo,
                                                           @RequestParam(required = false, defaultValue = "1") Long pageNumber,
-                                                          @RequestParam(required = false, defaultValue = "100") Long pageSize,
+                                                          @RequestParam(required = false, defaultValue = "1000") Long pageSize,
                                                           @RequestParam(required = false) String sortField,
                                                           @RequestParam(required = false, defaultValue = "ASC") String sortType)
         throws Exception {
