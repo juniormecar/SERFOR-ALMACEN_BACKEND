@@ -20,11 +20,16 @@ public class ParametroController {
     private static final org.apache.logging.log4j.Logger log = LogManager.getLogger(ParametroController.class);
 
     @GetMapping("")
-    public List<ParametroEntity> listaParametro(@RequestParam(required = false) String prefijo)
+    public Pageable<List<ParametroEntity>> listaParametro(@RequestParam(required = false) String prefijo,
+                                                          @RequestParam(required = false, defaultValue = "1") Long pageNumber,
+                                                          @RequestParam(required = false, defaultValue = "100") Long pageSize,
+                                                          @RequestParam(required = false) String sortField,
+                                                          @RequestParam(required = false, defaultValue = "ASC") String sortType)
         throws Exception {
         log.info("ParametroController - listaParametro", prefijo);
+        Page p = new Page(pageNumber, pageSize, sortField, sortType);
         try {
-            List<ParametroEntity> response = parametroValorService.listaParametro(prefijo);
+            Pageable<List<ParametroEntity>> response = parametroValorService.listaParametro(prefijo,p);
             log.info("ParametroController - listaParametro", "Proceso realizado correctamente");
             return response;
         } catch (Exception e) {

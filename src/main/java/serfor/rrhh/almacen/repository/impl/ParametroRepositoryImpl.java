@@ -39,39 +39,52 @@ public class ParametroRepositoryImpl extends JdbcDaoSupport implements Parametro
             ((ProcedureParameterImpl) parameter).enablePassingNulls(true);
         }
     }
-
     @Override
-    public List<ParametroEntity> listaParametro(String prefijo) throws Exception {
-        List<ParametroEntity> result = new ArrayList<ParametroEntity>();
-        try {
-            StoredProcedureQuery processStored = em.createStoredProcedureQuery("almacen.pa_Parametro_ListarPorPrefijo");
-            processStored.registerStoredProcedureParameter("prefijo", String.class, ParameterMode.IN);
-            SpUtil.enableNullParams(processStored);
-            processStored.setParameter("prefijo", prefijo);
-            processStored.execute();
-
-            List<Object[]> spResult = processStored.getResultList();
-            if (spResult.size() >= 1) {
-                for (Object[] row : spResult) {
-                    ParametroEntity per = new ParametroEntity();
-                    per.setIdParametro((Integer) row[0]);
-                    per.setCodigo((String) row[1]);
-                    per.setValorPrimario((String) row[2]);
-                    per.setValorSecundario((String) row[3]);
-                    per.setValorTerciario((String) row[4]);
-                    per.setIdTipoParametro((Integer) row[5]);
-                    per.setIdParametroPadre((Integer) row[6]);
-                    result.add(per);
-                }
-            } else {
-                return null;
-            }
-            return result;
+    public Pageable<List<ParametroEntity>> listaParametro(String prefijo,Page p) throws Exception {
+        try{
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Parametro_ListarPorPrefijo");
+            sp.registerStoredProcedureParameter("prefijo", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("sortField", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("sortType", String.class, ParameterMode.IN);
+            SpUtil.enableNullParams(sp);
+            sp.setParameter("prefijo", prefijo);
+            sp.setParameter("pageNumber", p.getPageNumber());
+            sp.setParameter("pageSize", p.getPageSize());
+            sp.setParameter("sortField", p.getSortField());
+            sp.setParameter("sortType", p.getSortType());
+            sp.execute();
+            return setResultDataListarParametro(p, sp.getResultList());
         } catch (Exception e) {
-            log.error("ParametroRepositoryImpl - listaParametro",
-                    "Ocurrió un error :" + e.getMessage());
-            throw new Exception(e.getMessage(), e);
+            log.error("listarTipoParametro" + "Ocurrió un error :" + e.getMessage());
+            return setResultDataListarParametro(p, null);
         }
+    }
+    private Pageable<List<ParametroEntity>> setResultDataListarParametro(Page page, List<Object[]> dataDb) throws Exception {
+        Pageable<List<ParametroEntity>> pageable=new Pageable<>(page);
+        List<ParametroEntity> items = new ArrayList<>();
+        for (Object[] row : dataDb) {
+            ParametroEntity per = new ParametroEntity();
+            per.setIdParametro((Integer) row[0]);
+            per.setCodigo((String) row[1]);
+            per.setValorPrimario((String) row[2]);
+            per.setValorSecundario((String) row[3]);
+            per.setValorTerciario((String) row[4]);
+            per.setIdTipoParametro((Integer) row[5]);
+            per.setPrefijo((String) row[6]);
+            items.add(per);
+            pageable.setTotalRecords(SpUtil.toLong(row[7]));
+
+        }
+        pageable.setData(items);
+        pageable.setSuccess(true);
+        if(items.size()>0){
+            pageable.setMessage("Se obtuvo data.");
+        }else{
+            pageable.setMessage("No se encontró data.");
+        }
+        return pageable;
     }
 
     @Override
