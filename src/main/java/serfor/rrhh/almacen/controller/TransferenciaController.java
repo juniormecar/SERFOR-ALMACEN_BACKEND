@@ -66,15 +66,16 @@ public class TransferenciaController {
     public Pageable<List<TransferenciaEntity>> ListarReportesAvanzados (@RequestParam(required = false) Integer nuIdAlmacen,
                                                                     @RequestParam(required = false) String tipoTransferencia,
                                                                         @RequestParam(required = false) Integer nuIdTransferencia,
+                                                                        @RequestParam(required = false) String tipoTransferenciaDetalle,
                                                                         @RequestParam(required = false, defaultValue = "1") Long pageNumber,
                                                                         @RequestParam(required = false, defaultValue = "10") Long pageSize,
                                                                         @RequestParam(required = false) String sortField,
                                                                         @RequestParam(required = false, defaultValue = "DESC") String sortType)
             throws Exception {
-        log.info("TransferenciaController - listar", nuIdAlmacen,tipoTransferencia,nuIdTransferencia);
+        log.info("TransferenciaController - listar", nuIdAlmacen,tipoTransferencia,nuIdTransferencia,tipoTransferenciaDetalle);
         Page p = new Page(pageNumber, pageSize, sortField, sortType);
         try {
-            Pageable<List<TransferenciaEntity>> response = transferenciaService.ListarReportesAvanzados(nuIdAlmacen,tipoTransferencia,nuIdTransferencia, p);
+            Pageable<List<TransferenciaEntity>> response = transferenciaService.ListarReportesAvanzados(nuIdAlmacen,tipoTransferencia,nuIdTransferencia,tipoTransferenciaDetalle, p);
             log.info("TransferenciaController - listar", "Proceso realizado correctamente");
             return response;
         } catch (Exception e) {

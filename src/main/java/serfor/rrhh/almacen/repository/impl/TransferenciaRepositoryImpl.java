@@ -220,12 +220,13 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
 
     @Override
     public Pageable<List<TransferenciaEntity>> ListarReportesAvanzados( Integer nuIdAlmacen,
-                                                                    String tipoTransferencia, Integer nuIdTransferencia, Page p) throws Exception {
+                                                                    String tipoTransferencia, Integer nuIdTransferencia,String tipoTransferenciaDetalle, Page p) throws Exception {
         try{
             StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Reportes_Avanzados_Listar");
             sp.registerStoredProcedureParameter("nuIdAlmacen", Integer.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("TipoTransferencia", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("nuIdTransferencia", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("tipoTransferenciaDetalle", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("sortField", String.class, ParameterMode.IN);
@@ -234,6 +235,7 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
             sp.setParameter("nuIdAlmacen", nuIdAlmacen);
             sp.setParameter("TipoTransferencia", tipoTransferencia);
             sp.setParameter("nuIdTransferencia", nuIdTransferencia);
+            sp.setParameter("tipoTransferenciaDetalle", tipoTransferenciaDetalle);
             sp.setParameter("pageNumber", p.getPageNumber());
             sp.setParameter("pageSize", p.getPageSize());
             sp.setParameter("sortField", p.getSortField());

@@ -11,6 +11,6 @@ public interface TransferenciaRepository {
                                                             String tipoTransferencia,Integer nuIdTransferencia,Page page) throws Exception;
 
     Pageable<List<TransferenciaEntity>> ListarReportesAvanzados(Integer nuIdAlmacen,
-                                                            String tipoTransferencia, Integer nuIdTransferencia,Page page) throws Exception;
+                                                            String tipoTransferencia, Integer nuIdTransferencia,String tipoTransferenciaDetalle,Page page) throws Exception;
 
 }

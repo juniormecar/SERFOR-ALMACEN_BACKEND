@@ -28,8 +28,8 @@ public class TransferenciaServiceImpl implements TransferenciaService {
 
     @Override
     public Pageable<List<TransferenciaEntity>> ListarReportesAvanzados(Integer nuIdAlmacen,
-                                                                   String tipoTransferencia, Integer nuIdTransferencia, Page page)
+                                                                   String tipoTransferencia, Integer nuIdTransferencia, String tipoTransferenciaDetalle, Page page)
             throws Exception {
-        return transferenciaRepository.ListarReportesAvanzados( nuIdAlmacen,tipoTransferencia,nuIdTransferencia, page);
+        return transferenciaRepository.ListarReportesAvanzados( nuIdAlmacen,tipoTransferencia,nuIdTransferencia,tipoTransferenciaDetalle, page);
     }
 }
