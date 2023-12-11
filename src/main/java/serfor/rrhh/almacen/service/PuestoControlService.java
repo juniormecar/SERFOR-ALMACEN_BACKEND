@@ -8,7 +8,9 @@ import serfor.rrhh.almacen.entity.ResultClassEntity;
 import java.util.List;
 
 public interface PuestoControlService {
-    Pageable<List<PuestoControlEntity>> ListarPuestoControl(Integer idAtf, Page page ) throws Exception;
+    Pageable<List<PuestoControlEntity>> ListarBandejaPuestoControl(Integer idAtf, Page page ) throws Exception;
+
+    List<PuestoControlEntity> ListarPuestoControl( Integer idAtf ) throws Exception;
 
     ResultClassEntity registrarPuestoControl(PuestoControlEntity puestoControl) throws Exception;
 

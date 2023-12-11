@@ -17,8 +17,13 @@ public class PuestoControlServiceImpl implements PuestoControlService {
     @Autowired
     private PuestoControlRepository puestocontrolRepository;
     @Override
-    public Pageable<List<PuestoControlEntity>> ListarPuestoControl(Integer idAtf, Page page) throws Exception {
-        return puestocontrolRepository.ListarPuestoControl(idAtf, page);
+    public Pageable<List<PuestoControlEntity>> ListarBandejaPuestoControl(Integer idAtf, Page page) throws Exception {
+        return puestocontrolRepository.ListarBandejaPuestoControl(idAtf, page);
+    }
+
+    @Override
+    public List<PuestoControlEntity> ListarPuestoControl(Integer idAtf) throws Exception {
+        return puestocontrolRepository.ListarPuestoControl(idAtf);
     }
 
     @Override

@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface PuestoControlRepository {
 
-    Pageable<List<PuestoControlEntity>> ListarPuestoControl(Integer idAtf, Page page) throws Exception;
+    Pageable<List<PuestoControlEntity>> ListarBandejaPuestoControl(Integer idAtf, Page page) throws Exception;
+
+    List<PuestoControlEntity> ListarPuestoControl(Integer idAtf) throws Exception;
 
     ResultClassEntity registrarPuestoControl(PuestoControlEntity puestoControl) throws Exception;
 

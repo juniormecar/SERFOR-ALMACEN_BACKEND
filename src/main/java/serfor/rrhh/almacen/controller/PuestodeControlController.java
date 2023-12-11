@@ -24,8 +24,8 @@ public class PuestodeControlController {
 
     private static final org.apache.logging.log4j.Logger log = LogManager.getLogger(PuestodeControlController.class);
 
-    @GetMapping("")
-    public Pageable<List<PuestoControlEntity>> ListarPuestoControl(@RequestParam(required = false) Integer idAtf,
+    @GetMapping("/listarBandejaPuestoControl")
+    public Pageable<List<PuestoControlEntity>> ListarBandejaPuestoControl(@RequestParam(required = false) Integer idAtf,
                                                                    @RequestParam(required = false, defaultValue = "1") Long pageNumber,
                                                                    @RequestParam(required = false, defaultValue = "100") Long pageSize,
                                                                    @RequestParam(required = false) String sortField,
@@ -34,7 +34,21 @@ public class PuestodeControlController {
         log.info("PuestodeControlController - ListarPuestoControl");
         Page p = new Page(pageNumber, pageSize, sortField, sortType);
         try {
-            Pageable<List<PuestoControlEntity>> response = puestocontrolService.ListarPuestoControl(idAtf,p);
+            Pageable<List<PuestoControlEntity>> response = puestocontrolService.ListarBandejaPuestoControl(idAtf,p);
+            log.info("PuestodeControlController - ListarPuestoControl", "Proceso realizado correctamente");
+            return response;
+        } catch (Exception e) {
+            log.error("PuestodeControlController -ListarPuestoControl", "Ocurrió un error :" + e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
+    @GetMapping("")
+    public List<PuestoControlEntity> ListarPuestoControl(@RequestParam(required = false) Integer idAtf)
+            throws Exception {
+        log.info("PuestodeControlController - ListarPuestoControl");
+        try {
+            List<PuestoControlEntity> response = puestocontrolService.ListarPuestoControl(idAtf);
             log.info("PuestodeControlController - ListarPuestoControl", "Proceso realizado correctamente");
             return response;
         } catch (Exception e) {
