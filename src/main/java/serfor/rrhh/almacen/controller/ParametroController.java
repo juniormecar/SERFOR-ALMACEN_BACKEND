@@ -19,8 +19,8 @@ public class ParametroController {
     private ParametroService parametroValorService;
     private static final org.apache.logging.log4j.Logger log = LogManager.getLogger(ParametroController.class);
 
-    @GetMapping("")
-    public Pageable<List<ParametroEntity>> listaParametro(@RequestParam(required = false) String prefijo,
+    @GetMapping("/listarBandejaParametro")
+    public Pageable<List<ParametroEntity>> listaBandejaParametro(@RequestParam(required = false) String prefijo,
                                                           @RequestParam(required = false, defaultValue = "1") Long pageNumber,
                                                           @RequestParam(required = false, defaultValue = "1000") Long pageSize,
                                                           @RequestParam(required = false) String sortField,
@@ -29,7 +29,21 @@ public class ParametroController {
         log.info("ParametroController - listaParametro", prefijo);
         Page p = new Page(pageNumber, pageSize, sortField, sortType);
         try {
-            Pageable<List<ParametroEntity>> response = parametroValorService.listaParametro(prefijo,p);
+            Pageable<List<ParametroEntity>> response = parametroValorService.listaBandejaParametro(prefijo,p);
+            log.info("ParametroController - listaParametro", "Proceso realizado correctamente");
+            return response;
+        } catch (Exception e) {
+            log.error("ParametroController -listaParametro", "Ocurrió un error :" + e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
+    @GetMapping("")
+    public List<ParametroEntity> listaParametro(@RequestParam(required = false) String prefijo)
+            throws Exception {
+        log.info("ParametroController - listaParametro", prefijo);
+        try {
+            List<ParametroEntity> response = parametroValorService.listaParametro(prefijo);
             log.info("ParametroController - listaParametro", "Proceso realizado correctamente");
             return response;
         } catch (Exception e) {

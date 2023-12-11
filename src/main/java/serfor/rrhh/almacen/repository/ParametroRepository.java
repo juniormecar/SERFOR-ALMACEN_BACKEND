@@ -5,7 +5,9 @@ import serfor.rrhh.almacen.entity.*;
 import java.util.List;
 
 public interface ParametroRepository {
-    Pageable<List<ParametroEntity>> listaParametro(String prefijo, Page page) throws Exception;
+    Pageable<List<ParametroEntity>> listaBandejaParametro(String prefijo, Page page) throws Exception;
+
+    List<ParametroEntity> listaParametro(String prefijo) throws Exception;
 
     ResultClassEntity saveParametros(List<TipoparametroEntity> lstParametros) throws Exception;
 

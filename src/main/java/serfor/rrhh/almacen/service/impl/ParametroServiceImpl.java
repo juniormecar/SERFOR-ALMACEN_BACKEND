@@ -14,9 +14,15 @@ public class ParametroServiceImpl implements ParametroService {
     @Autowired
     private ParametroRepository parametroValorRepository;
     @Override
-    public Pageable<List<ParametroEntity>> listaParametro(String prefijo, Page page) throws Exception {
-        return parametroValorRepository.listaParametro(prefijo , page);
+    public Pageable<List<ParametroEntity>> listaBandejaParametro(String prefijo, Page page) throws Exception {
+        return parametroValorRepository.listaBandejaParametro(prefijo , page);
     }
+
+    @Override
+    public List<ParametroEntity> listaParametro(String prefijo) throws Exception {
+        return parametroValorRepository.listaParametro(prefijo);
+    }
+
     @Override
     public ResultClassEntity saveParametros(List<TipoparametroEntity> lstParametros) throws Exception {
         return parametroValorRepository.saveParametros(lstParametros);

@@ -40,9 +40,9 @@ public class ParametroRepositoryImpl extends JdbcDaoSupport implements Parametro
         }
     }
     @Override
-    public Pageable<List<ParametroEntity>> listaParametro(String prefijo,Page p) throws Exception {
+    public Pageable<List<ParametroEntity>> listaBandejaParametro(String prefijo,Page p) throws Exception {
         try{
-            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Parametro_ListarPorPrefijo");
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Parametro_ListarPorPrefijo_Bandeja");
             sp.registerStoredProcedureParameter("prefijo", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
@@ -85,6 +85,40 @@ public class ParametroRepositoryImpl extends JdbcDaoSupport implements Parametro
             pageable.setMessage("No se encontró data.");
         }
         return pageable;
+    }
+
+    @Override
+    public List<ParametroEntity> listaParametro(String prefijo) throws Exception {
+        List<ParametroEntity> result = new ArrayList<ParametroEntity>();
+        try {
+            StoredProcedureQuery processStored = em.createStoredProcedureQuery("almacen.pa_Parametro_ListarPorPrefijo");
+            processStored.registerStoredProcedureParameter("prefijo", String.class, ParameterMode.IN);
+            SpUtil.enableNullParams(processStored);
+            processStored.setParameter("prefijo", prefijo);
+            processStored.execute();
+
+            List<Object[]> spResult = processStored.getResultList();
+            if (spResult.size() >= 1) {
+                for (Object[] row : spResult) {
+                    ParametroEntity per = new ParametroEntity();
+                    per.setIdParametro((Integer) row[0]);
+                    per.setCodigo((String) row[1]);
+                    per.setValorPrimario((String) row[2]);
+                    per.setValorSecundario((String) row[3]);
+                    per.setValorTerciario((String) row[4]);
+                    per.setIdTipoParametro((Integer) row[5]);
+                    per.setPrefijo((String) row[6]);
+                    result.add(per);
+                }
+            } else {
+                return null;
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("ParametroRepositoryImpl - listaParametro",
+                    "Ocurrió un error :" + e.getMessage());
+            throw new Exception(e.getMessage(), e);
+        }
     }
 
     @Override
