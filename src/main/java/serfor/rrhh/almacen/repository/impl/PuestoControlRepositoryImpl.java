@@ -115,6 +115,8 @@ public class PuestoControlRepositoryImpl extends JdbcDaoSupport implements Puest
                     pc.setCoordenadasEste((String) row[7]);
                     pc.setZonaUTM((String) row[8]);
                     pc.setIdAtf((Integer) row[9]);
+                    pc.setNombreATF((String) row[10]);
+                    pc.setDireccion((String) row[11]);
                     result.add(pc);
                 }
             } else {
