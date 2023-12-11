@@ -19,6 +19,8 @@ public interface ParametroRepository {
 
     ResultClassEntity EliminarTipoParametro(Integer idTipoParametro,Integer idUsuarioElimina) throws Exception;
 
-    Pageable<List<TipoparametroEntity>> listarTipoParametro(Page page) throws Exception;
+    Pageable<List<TipoparametroEntity>> listarBandejaTipoParametro(Page page) throws Exception;
+
+    List<TipoparametroEntity> listarTipoParametro() throws Exception;
 
 }

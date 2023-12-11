@@ -318,9 +318,9 @@ public class ParametroRepositoryImpl extends JdbcDaoSupport implements Parametro
     }
 
     @Override
-    public Pageable<List<TipoparametroEntity>> listarTipoParametro(Page p) throws Exception {
+    public Pageable<List<TipoparametroEntity>> listarBandejaTipoParametro(Page p) throws Exception {
         try{
-            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_TipoParametro_Listar");
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_TipoParametro_Bandeja_Listar");
             sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("sortField", String.class, ParameterMode.IN);
@@ -359,4 +359,34 @@ public class ParametroRepositoryImpl extends JdbcDaoSupport implements Parametro
         }
         return pageable;
     }
+
+    @Override
+    public List<TipoparametroEntity> listarTipoParametro() throws Exception {
+        List<TipoparametroEntity> result = new ArrayList<TipoparametroEntity>();
+        try {
+            StoredProcedureQuery processStored = em.createStoredProcedureQuery("almacen.pa_TipoParametro_Listar");
+            SpUtil.enableNullParams(processStored);
+            processStored.execute();
+
+            List<Object[]> spResult = processStored.getResultList();
+            if (spResult.size() >= 1) {
+                for (Object[] row : spResult) {
+                    TipoparametroEntity tipopara = new TipoparametroEntity();
+                    tipopara.setIdTipoParametro((Integer) row[0]);
+                    tipopara.setPrefijo((String) row[1]);
+                    tipopara.setNombre((String) row[2]);
+                    tipopara.setDescripcion((String) row[3]);
+                    result.add(tipopara);
+                }
+            } else {
+                return null;
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("listarTipoParametro",
+                    "Ocurrió un error :" + e.getMessage());
+            throw new Exception(e.getMessage(), e);
+        }
+    }
+
 }

@@ -147,8 +147,8 @@ public class ParametroController {
         }
     }
 
-    @GetMapping("/listarTipoParametro")
-    public Pageable<List<TipoparametroEntity>> listarTipoParametro (@RequestParam(required = false, defaultValue = "1") Long pageNumber,
+    @GetMapping("/listarBandejaTipoParametro")
+    public Pageable<List<TipoparametroEntity>> listarBandejaTipoParametro (@RequestParam(required = false, defaultValue = "1") Long pageNumber,
                                                                     @RequestParam(required = false, defaultValue = "100") Long pageSize,
                                                                     @RequestParam(required = false) String sortField,
                                                                     @RequestParam(required = false, defaultValue = "ASC") String sortType)
@@ -156,7 +156,21 @@ public class ParametroController {
         log.info("ParametroController - listarTipoParametro");
         Page p = new Page(pageNumber, pageSize, sortField, sortType);
         try {
-            Pageable<List<TipoparametroEntity>> response = parametroValorService.listarTipoParametro(p);
+            Pageable<List<TipoparametroEntity>> response = parametroValorService.listarBandejaTipoParametro(p);
+            log.info("TipoParametro - listar", "Proceso realizado correctamente");
+            return response;
+        } catch (Exception e) {
+            log.error("TipoParametro - listar", "Ocurrió un error :" + e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
+    @GetMapping("/listarTipoParametro")
+    public List<TipoparametroEntity> listarTipoParametro ()
+        throws Exception {
+        log.info("ParametroController - listarTipoParametro");
+        try {
+            List<TipoparametroEntity> response = parametroValorService.listarTipoParametro();
             log.info("TipoParametro - listar", "Proceso realizado correctamente");
             return response;
         } catch (Exception e) {

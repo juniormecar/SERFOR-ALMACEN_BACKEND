@@ -49,7 +49,12 @@ public class ParametroServiceImpl implements ParametroService {
     }
 
     @Override
-    public Pageable<List<TipoparametroEntity>> listarTipoParametro(Page page) throws Exception {
-        return parametroValorRepository.listarTipoParametro(page);
+    public Pageable<List<TipoparametroEntity>> listarBandejaTipoParametro(Page page) throws Exception {
+        return parametroValorRepository.listarBandejaTipoParametro(page);
+    }
+
+    @Override
+    public List<TipoparametroEntity> listarTipoParametro() throws Exception {
+        return parametroValorRepository.listarTipoParametro();
     }
 }
