@@ -19,8 +19,13 @@ public class AtfServiceImpl implements AtfService {
     private AtfRepository atfRepository;
 
     @Override
-    public Pageable<List<AtfEntity>> ListarATF(Page page) throws Exception {
-        return atfRepository.ListarATF(page);
+    public Pageable<List<AtfEntity>> ListarBandejaATF(Page page) throws Exception {
+        return atfRepository.ListarBandejaATF(page);
+    }
+
+    @Override
+    public List<AtfEntity> ListarATF() throws Exception {
+        return atfRepository.ListarATF();
     }
 
     @Override

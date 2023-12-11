@@ -42,9 +42,9 @@ public class AtfRepositoryImpl  extends JdbcDaoSupport implements AtfRepository 
     }
 
     @Override
-    public Pageable<List<AtfEntity>> ListarATF(Page p) throws Exception {
+    public Pageable<List<AtfEntity>> ListarBandejaATF(Page p) throws Exception {
         try{
-            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_ATF_Listar");
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_ATF_Bandeja_Listar");
             sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("sortField", String.class, ParameterMode.IN);
@@ -81,6 +81,34 @@ public class AtfRepositoryImpl  extends JdbcDaoSupport implements AtfRepository 
             pageable.setMessage("No se encontró data.");
         }
         return pageable;
+    }
+
+    @Override
+    public List<AtfEntity> ListarATF() throws Exception {
+        List<AtfEntity> result = new ArrayList<AtfEntity>();
+        try {
+            StoredProcedureQuery processStored = em.createStoredProcedureQuery("almacen.pa_ATF_Listar");
+            SpUtil.enableNullParams(processStored);
+            processStored.execute();
+
+            List<Object[]> spResult = processStored.getResultList();
+            if (spResult.size() >= 1) {
+                for (Object[] row : spResult) {
+                    AtfEntity atf = new AtfEntity();
+                    atf.setIdAtf((Integer) row[0]);
+                    atf.setNombreAtf((String) row[1]);
+                    atf.setCodigoAtf((String) row[2]);
+                    result.add(atf);
+                }
+            } else {
+                return null;
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("AtfRepositoryImpl - ListarATF",
+                    "Ocurrió un error :" + e.getMessage());
+            throw new Exception(e.getMessage(), e);
+        }
     }
 
     @Override

@@ -8,7 +8,9 @@ import serfor.rrhh.almacen.entity.ResultClassEntity;
 import java.util.List;
 
 public interface AtfService {
-    Pageable<List<AtfEntity>> ListarATF(Page page) throws Exception;
+    Pageable<List<AtfEntity>> ListarBandejaATF(Page page) throws Exception;
+
+    List<AtfEntity> ListarATF() throws Exception;
 
     ResultClassEntity RegistrarATF(AtfEntity atf) throws Exception;
 

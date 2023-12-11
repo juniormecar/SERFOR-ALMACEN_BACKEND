@@ -23,20 +23,34 @@ public class AtfController {
 
     private static final org.apache.logging.log4j.Logger log = LogManager.getLogger(AtfController.class);
 
-    @GetMapping("")
-    public Pageable<List<AtfEntity>> ListarATF(@RequestParam(required = false, defaultValue = "1") Long pageNumber,
+    @GetMapping("/listarBandejaATF")
+    public Pageable<List<AtfEntity>> ListarBandejaATF(@RequestParam(required = false, defaultValue = "1") Long pageNumber,
                                                @RequestParam(required = false, defaultValue = "100") Long pageSize,
                                                @RequestParam(required = false) String sortField,
                                                @RequestParam(required = false, defaultValue = "ASC") String sortType)
         throws Exception {
-        log.info("AtfController - ListarATF");
+        log.info("AtfController - ListarBandejaATF");
         Page p = new Page(pageNumber, pageSize, sortField, sortType);
         try {
-            Pageable<List<AtfEntity>> response = atfService.ListarATF(p);
+            Pageable<List<AtfEntity>> response = atfService.ListarBandejaATF(p);
+            log.info("AtfController - ListarBandejaATF", "Proceso realizado correctamente");
+            return response;
+        } catch (Exception e) {
+            log.error("AtfController -ListarBandejaATF", "Ocurrió un error :" + e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
+    @GetMapping("")
+    public List<AtfEntity> ListarATF()
+            throws Exception {
+        log.info("AtfController - ListarATF");
+        try {
+            List<AtfEntity> response = atfService.ListarATF();
             log.info("AtfController - ListarATF", "Proceso realizado correctamente");
             return response;
         } catch (Exception e) {
-            log.error("AtfController -ListarATF", "Ocurrió un error :" + e.getMessage());
+            log.error("AtfController - ListarATF", "Ocurrió un error :" + e.getMessage());
             throw new Exception(e);
         }
     }
