@@ -99,6 +99,7 @@ public class AlmacenRepositoryImpl extends JdbcDaoSupport implements AlmacenRepo
             item.setDireccionAlmacen((String) row[23]);
             item.setCapacidadNoMaderable((BigDecimal) row[24]);
             item.setCapacidadFauna((BigDecimal) row[25]);
+            item.setCapacidadMaderable((BigDecimal) row[26]);
             items.add(item);
             pageable.setTotalRecords(SpUtil.toLong(row[17]));
 
@@ -154,14 +155,15 @@ public class AlmacenRepositoryImpl extends JdbcDaoSupport implements AlmacenRepo
             spa.registerStoredProcedureParameter("TipoDocumento", String.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("NumeroDocumento", String.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("NombresEncargado", String.class, ParameterMode.IN);
-            spa.registerStoredProcedureParameter("NuCapacidadAlmacen", BigDecimal.class, ParameterMode.IN);
+            //spa.registerStoredProcedureParameter("NuCapacidadAlmacen", BigDecimal.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("IdUsuarioRegistro", Integer.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("PuestoControl", String.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("Atf", String.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("foto", String.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("direccionAlmacen", String.class, ParameterMode.IN);
-            spa.registerStoredProcedureParameter("CapacidadNOMAD", BigDecimal.class, ParameterMode.IN);
-            spa.registerStoredProcedureParameter("CapacidadFA", BigDecimal.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("capacidadNoMaderable", BigDecimal.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("capacidadFauna", BigDecimal.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("capacidadMaderable", BigDecimal.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("idAlmacen", Integer.class, ParameterMode.INOUT);
             SpUtil.enableNullParams(spa);
             spa.setParameter("ubigeo", almacen.getTxUbigeo());
@@ -170,14 +172,15 @@ public class AlmacenRepositoryImpl extends JdbcDaoSupport implements AlmacenRepo
             spa.setParameter("TipoDocumento", almacen.getTxTipoDocumento());
             spa.setParameter("NumeroDocumento", almacen.getTxNumeroDocumento());
             spa.setParameter("NombresEncargado", almacen.getTxNombresEncargado());
-            spa.setParameter("NuCapacidadAlmacen", almacen.getNuCapacidadAlmacen());
+            //spa.setParameter("NuCapacidadAlmacen", almacen.getNuCapacidadAlmacen());
             spa.setParameter("IdUsuarioRegistro", almacen.getNuIdUsuarioRegistro());
             spa.setParameter("PuestoControl", almacen.getTxPuestoControl());
             spa.setParameter("Atf", almacen.getTxNumeroATF());
             spa.setParameter("foto", almacen.getFoto());
             spa.setParameter("direccionAlmacen", almacen.getDireccionAlmacen());
-            spa.setParameter("CapacidadNOMAD", almacen.getCapacidadNoMaderable());
-            spa.setParameter("CapacidadFA", almacen.getCapacidadFauna());
+            spa.setParameter("capacidadNoMaderable", almacen.getCapacidadNoMaderable());
+            spa.setParameter("capacidadFauna", almacen.getCapacidadFauna());
+            spa.setParameter("capacidadMaderable", almacen.getCapacidadMaderable());
             spa.setParameter("idAlmacen", almacen.getNuIdAlmacen());
             spa.execute();
             Integer idAlmacenReturn =(Integer)spa.getOutputParameterValue("idAlmacen");
