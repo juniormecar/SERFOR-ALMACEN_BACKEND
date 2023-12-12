@@ -97,6 +97,8 @@ public class AlmacenRepositoryImpl extends JdbcDaoSupport implements AlmacenRepo
             item.setFoto((String) row[21]);
             item.setCantidadResponsables((Integer) row[22]);
             item.setDireccionAlmacen((String) row[23]);
+            item.setCapacidadNoMaderable((BigDecimal) row[24]);
+            item.setCapacidadFauna((BigDecimal) row[25]);
             items.add(item);
             pageable.setTotalRecords(SpUtil.toLong(row[17]));
 
@@ -158,6 +160,8 @@ public class AlmacenRepositoryImpl extends JdbcDaoSupport implements AlmacenRepo
             spa.registerStoredProcedureParameter("Atf", String.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("foto", String.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("direccionAlmacen", String.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("CapacidadNOMAD", BigDecimal.class, ParameterMode.IN);
+            spa.registerStoredProcedureParameter("CapacidadFA", BigDecimal.class, ParameterMode.IN);
             spa.registerStoredProcedureParameter("idAlmacen", Integer.class, ParameterMode.INOUT);
             SpUtil.enableNullParams(spa);
             spa.setParameter("ubigeo", almacen.getTxUbigeo());
@@ -172,6 +176,8 @@ public class AlmacenRepositoryImpl extends JdbcDaoSupport implements AlmacenRepo
             spa.setParameter("Atf", almacen.getTxNumeroATF());
             spa.setParameter("foto", almacen.getFoto());
             spa.setParameter("direccionAlmacen", almacen.getDireccionAlmacen());
+            spa.setParameter("CapacidadNOMAD", almacen.getCapacidadNoMaderable());
+            spa.setParameter("CapacidadFA", almacen.getCapacidadFauna());
             spa.setParameter("idAlmacen", almacen.getNuIdAlmacen());
             spa.execute();
             Integer idAlmacenReturn =(Integer)spa.getOutputParameterValue("idAlmacen");

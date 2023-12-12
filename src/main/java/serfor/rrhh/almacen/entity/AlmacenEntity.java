@@ -40,4 +40,7 @@ public class AlmacenEntity {
     private Integer cantidadResponsables;
     private String direccionAlmacen;
     private List<AlmacenResponsableEntity> lstAlmacenResponsable;
+
+    private BigDecimal CapacidadNoMaderable;
+    private BigDecimal CapacidadFauna;
 }
