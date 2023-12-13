@@ -117,11 +117,12 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
     }
 
     @Override
-    public Pageable<List<ReporteEntity>> ListarReporteIndicadores(Integer nuIdAlmacen, String periodo, Page p) throws Exception {
+    public Pageable<List<ReporteEntity>> ListarReporteIndicadores(Integer nuIdAlmacen, String periodo,String tipoAccion, Page p) throws Exception {
         try{
             StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Reporte_Indicadores_Listar");
             sp.registerStoredProcedureParameter("nuIdAlmacen", Integer.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("periodo", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("tipoAccion", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("sortField", String.class, ParameterMode.IN);
@@ -129,6 +130,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             SpUtil.enableNullParams(sp);
             sp.setParameter("nuIdAlmacen", nuIdAlmacen);
             sp.setParameter("periodo", periodo);
+            sp.setParameter("tipoAccion", tipoAccion);
             sp.setParameter("pageNumber", p.getPageNumber());
             sp.setParameter("pageSize", p.getPageSize());
             sp.setParameter("sortField", p.getSortField());

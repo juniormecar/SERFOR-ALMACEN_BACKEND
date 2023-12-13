@@ -43,4 +43,6 @@ public class ReporteEntity {
     private String periodo;
 
     private BigDecimal cantidad;
+    private String tipoAccion;
+
 }

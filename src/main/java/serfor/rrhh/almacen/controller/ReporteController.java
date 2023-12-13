@@ -45,15 +45,16 @@ public class ReporteController {
     @GetMapping("/reporteIndicadores")
     public Pageable<List<ReporteEntity>> ListarReporteIndicadores(@RequestParam(required = false) Integer nuIdAlmacen,
                                                                   @RequestParam(required = false) String periodo,
+                                                                  @RequestParam(required = false) String tipoAccion,
                                                                   @RequestParam(required = false, defaultValue = "1") Long pageNumber,
                                                                   @RequestParam(required = false, defaultValue = "10") Long pageSize,
                                                                   @RequestParam(required = false, defaultValue = "idTransferencia") String sortField,
                                                                   @RequestParam(required = false, defaultValue = "DESC") String sortType)
             throws Exception {
-        log.info("ReporteController - ListarReporteIndicadores", nuIdAlmacen,periodo);
+        log.info("ReporteController - ListarReporteIndicadores", nuIdAlmacen,periodo,tipoAccion);
         Page p = new Page(pageNumber, pageSize, sortField, sortType);
         try {
-            Pageable<List<ReporteEntity>> response = reporteService.ListarReporteIndicadores(nuIdAlmacen,periodo, p);
+            Pageable<List<ReporteEntity>> response = reporteService.ListarReporteIndicadores(nuIdAlmacen,periodo,tipoAccion, p);
             log.info("ReporteController - ListarReporteIndicadores", "Proceso realizado correctamente");
             return response;
         } catch (Exception e) {
