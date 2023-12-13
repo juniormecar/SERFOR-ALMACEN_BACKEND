@@ -100,6 +100,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             item.setAlmacenDestino((String) row[19]);
             item.setMetroCubico((BigDecimal) row[20]);
             item.setFaunaSalida((String) row[22]);
+            item.setTipoEspecie((String) row[23]);
             items.add(item);
             pageable.setTotalRecords(SpUtil.toLong(row[21]));
 
@@ -107,6 +108,55 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
         pageable.setData(items);
         pageable.setSuccess(true);
         //pageable.setTotalRecords(Long.valueOf(items.size()));
+        if(items.size()>0){
+            pageable.setMessage("Se obtuvo data.");
+        }else{
+            pageable.setMessage("No se encontró data.");
+        }
+        return pageable;
+    }
+
+    @Override
+    public Pageable<List<ReporteEntity>> ListarReporteIndicadores(Integer nuIdAlmacen, String periodo, Page p) throws Exception {
+        try{
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Reporte_Indicadores_Listar");
+            sp.registerStoredProcedureParameter("nuIdAlmacen", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("periodo", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("sortField", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("sortType", String.class, ParameterMode.IN);
+            SpUtil.enableNullParams(sp);
+            sp.setParameter("nuIdAlmacen", nuIdAlmacen);
+            sp.setParameter("periodo", periodo);
+            sp.setParameter("pageNumber", p.getPageNumber());
+            sp.setParameter("pageSize", p.getPageSize());
+            sp.setParameter("sortField", p.getSortField());
+            sp.setParameter("sortType", p.getSortType());
+            sp.execute();
+            return setResultDataListarReporteIndicadores(p, sp.getResultList());
+        } catch (Exception e) {
+            log.error("ListarReporteIndicadores"+"Ocurrió un error :" + e.getMessage());
+            return setResultDataListarReporteIndicadores(p, null);
+        }
+    }
+
+    private Pageable<List<ReporteEntity>> setResultDataListarReporteIndicadores(Page page, List<Object[]> dataDb) throws Exception {
+        Pageable<List<ReporteEntity>> pageable=new Pageable<>(page);
+        List<ReporteEntity> items = new ArrayList<>();
+        for (Object[] row : dataDb) {
+            ReporteEntity item = new ReporteEntity();
+            item.setIdEspecie((Integer) row[0]);
+            item.setCantidad((BigDecimal) row[1]);
+            item.setNombreComun((String) row[2]);
+            item.setNombreCientifico((String) row[3]);
+            item.setAlmacenOrigen((String) row[4]);
+            items.add(item);
+            pageable.setTotalRecords(SpUtil.toLong(row[5]));
+
+        }
+        pageable.setData(items);
+        pageable.setSuccess(true);
         if(items.size()>0){
             pageable.setMessage("Se obtuvo data.");
         }else{

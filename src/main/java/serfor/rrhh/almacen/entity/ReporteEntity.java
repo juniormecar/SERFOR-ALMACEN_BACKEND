@@ -41,4 +41,6 @@ public class ReporteEntity {
     private Integer nuIdAlmacenOrigin;
     private String tipoEspecie;
     private String periodo;
+
+    private BigDecimal cantidad;
 }
