@@ -20,9 +20,9 @@ public class ReporteServiceImpl implements ReporteService{
 
     @Override
     public Pageable<List<ReporteEntity>> ListarReporteSalidas(String tipoTransferencia, Integer nuIdAlmacen,
-                                                              String tipoEspecie, String periodo, Date fechaInicio, Date fechaFin, Page page)
+                                                              String tipoEspecie, String periodo, Date fechaInicio, Date fechaFin,String numeroDocumento, Page page)
     throws Exception {
-        return reporteRepository.ListarReporteSalidas( tipoTransferencia, nuIdAlmacen,tipoEspecie,periodo, fechaInicio, fechaFin, page);
+        return reporteRepository.ListarReporteSalidas( tipoTransferencia, nuIdAlmacen,tipoEspecie,periodo, fechaInicio, fechaFin,numeroDocumento, page);
     }
 
     @Override

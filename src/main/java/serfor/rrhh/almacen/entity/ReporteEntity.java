@@ -46,5 +46,6 @@ public class ReporteEntity {
     private String tipoAccion;
     private Date fechaInicio;
     private Date fechaFin;
+    private String numeroDocumento;
 
 }

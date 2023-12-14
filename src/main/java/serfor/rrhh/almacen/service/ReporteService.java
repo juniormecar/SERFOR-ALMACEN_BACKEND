@@ -10,7 +10,7 @@ import java.util.List;
 public interface ReporteService {
 
     Pageable<List<ReporteEntity>> ListarReporteSalidas(String tipoTransferencia, Integer nuIdAlmacen,
-                                                       String tipoEspecie, String periodo, Date fechaInicio, Date fechaFin, Page page) throws Exception;
+                                                       String tipoEspecie, String periodo, Date fechaInicio, Date fechaFin, String numeroDocumento, Page page) throws Exception;
 
     Pageable<List<ReporteEntity>> ListarReporteIndicadores(Integer nuIdAlmacen,String periodo, String tipoAccion, Page page) throws Exception;
 }

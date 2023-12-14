@@ -28,15 +28,16 @@ public class ReporteController {
                                                               @RequestParam(required = false) String periodo,
                                                               @RequestParam(required = false) Date fechaInicio,
                                                               @RequestParam(required = false) Date fechaFin,
+                                                              @RequestParam(required = false) String numeroDocumento,
                                                               @RequestParam(required = false, defaultValue = "1") Long pageNumber,
                                                               @RequestParam(required = false, defaultValue = "10") Long pageSize,
                                                               @RequestParam(required = false, defaultValue = "idTransferencia") String sortField,
                                                               @RequestParam(required = false, defaultValue = "DESC") String sortType)
             throws Exception {
-        log.info("ReporteController - ListarReporteSalidas", tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo,fechaInicio,fechaFin);
+        log.info("ReporteController - ListarReporteSalidas", tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo,fechaInicio,fechaFin,numeroDocumento);
         Page p = new Page(pageNumber, pageSize, sortField, sortType);
         try {
-            Pageable<List<ReporteEntity>> response = reporteService.ListarReporteSalidas(tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo,fechaInicio, fechaFin, p);
+            Pageable<List<ReporteEntity>> response = reporteService.ListarReporteSalidas(tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo,fechaInicio, fechaFin,numeroDocumento, p);
             log.info("ReporteController - ListarReporteSalidas", "Proceso realizado correctamente");
             return response;
         } catch (Exception e) {

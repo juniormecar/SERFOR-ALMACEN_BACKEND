@@ -45,7 +45,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
 
     @Override
     public Pageable<List<ReporteEntity>> ListarReporteSalidas(String tipoTransferencia, Integer nuIdAlmacen,
-                                                              String tipoEspecie, String periodo,Date fechaInicio, Date fechaFin, Page p) throws Exception {
+                                                              String tipoEspecie, String periodo,Date fechaInicio, Date fechaFin,String numeroDocumento, Page p) throws Exception {
         try{
             StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Reporte_Salidas_Listar");
             sp.registerStoredProcedureParameter("tipoTransferenciaDetalle", String.class, ParameterMode.IN);
@@ -54,6 +54,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             sp.registerStoredProcedureParameter("periodo", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("fechaInicio", Date.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("fechaFin", Date.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("numeroDocumento", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("sortField", String.class, ParameterMode.IN);
@@ -65,6 +66,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             sp.setParameter("periodo", periodo);
             sp.setParameter("fechaInicio", fechaInicio);
             sp.setParameter("fechaFin", fechaFin);
+            sp.setParameter("numeroDocumento", numeroDocumento);
             sp.setParameter("pageNumber", p.getPageNumber());
             sp.setParameter("pageSize", p.getPageSize());
             sp.setParameter("sortField", p.getSortField());
