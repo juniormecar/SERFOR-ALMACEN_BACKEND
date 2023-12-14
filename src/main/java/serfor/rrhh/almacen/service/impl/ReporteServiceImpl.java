@@ -9,6 +9,7 @@ import serfor.rrhh.almacen.entity.ReporteEntity;
 import serfor.rrhh.almacen.repository.ReporteRepository;
 import serfor.rrhh.almacen.service.ReporteService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,9 +20,9 @@ public class ReporteServiceImpl implements ReporteService{
 
     @Override
     public Pageable<List<ReporteEntity>> ListarReporteSalidas(String tipoTransferencia, Integer nuIdAlmacen,
-                                                              String tipoEspecie, String periodo, Page page)
+                                                              String tipoEspecie, String periodo, Date fechaInicio, Date fechaFin, Page page)
     throws Exception {
-        return reporteRepository.ListarReporteSalidas( tipoTransferencia, nuIdAlmacen,tipoEspecie,periodo, page);
+        return reporteRepository.ListarReporteSalidas( tipoTransferencia, nuIdAlmacen,tipoEspecie,periodo, fechaInicio, fechaFin, page);
     }
 
     @Override

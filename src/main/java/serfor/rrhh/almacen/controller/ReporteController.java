@@ -8,6 +8,7 @@ import serfor.rrhh.almacen.entity.Pageable;
 import serfor.rrhh.almacen.entity.ReporteEntity;
 import serfor.rrhh.almacen.service.ReporteService;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -25,15 +26,17 @@ public class ReporteController {
                                                               @RequestParam(required = false) Integer nuIdAlmacen,
                                                               @RequestParam(required = false) String tipoEspecie,
                                                               @RequestParam(required = false) String periodo,
+                                                              @RequestParam(required = false) Date fechaInicio,
+                                                              @RequestParam(required = false) Date fechaFin,
                                                               @RequestParam(required = false, defaultValue = "1") Long pageNumber,
                                                               @RequestParam(required = false, defaultValue = "10") Long pageSize,
                                                               @RequestParam(required = false, defaultValue = "idTransferencia") String sortField,
                                                               @RequestParam(required = false, defaultValue = "DESC") String sortType)
             throws Exception {
-        log.info("ReporteController - ListarReporteSalidas", tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo);
+        log.info("ReporteController - ListarReporteSalidas", tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo,fechaInicio,fechaFin);
         Page p = new Page(pageNumber, pageSize, sortField, sortType);
         try {
-            Pageable<List<ReporteEntity>> response = reporteService.ListarReporteSalidas(tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo, p);
+            Pageable<List<ReporteEntity>> response = reporteService.ListarReporteSalidas(tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo,fechaInicio, fechaFin, p);
             log.info("ReporteController - ListarReporteSalidas", "Proceso realizado correctamente");
             return response;
         } catch (Exception e) {

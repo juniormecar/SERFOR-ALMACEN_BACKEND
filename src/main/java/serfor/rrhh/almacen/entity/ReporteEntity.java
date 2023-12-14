@@ -44,5 +44,7 @@ public class ReporteEntity {
 
     private BigDecimal cantidad;
     private String tipoAccion;
+    private Date fechaInicio;
+    private Date fechaFin;
 
 }
