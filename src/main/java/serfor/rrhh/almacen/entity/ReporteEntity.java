@@ -48,4 +48,7 @@ public class ReporteEntity {
     private Date fechaFin;
     private String numeroDocumento;
 
+    private Integer cantidadTotalIngresos;
+    private Integer cantidadTotalSalidas;
+    private String detalleReporte;
 }
