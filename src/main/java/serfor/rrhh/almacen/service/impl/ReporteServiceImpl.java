@@ -26,9 +26,12 @@ public class ReporteServiceImpl implements ReporteService{
     }
 
     @Override
-    public Pageable<List<ReporteEntity>> ListarReporteIndicadores(Integer nuIdAlmacen,String periodo,String tipoAccion,String numeroDocumento, Page page)
+
+    public Pageable<List<ReporteEntity>> ListarReporteIndicadores(Integer nuIdAlmacen,String periodo,String tipoAccion,
+                                                                  String numeroDocumento,String detalleReporte, Page page)
             throws Exception {
-        return reporteRepository.ListarReporteIndicadores( nuIdAlmacen,periodo,tipoAccion,numeroDocumento,page);
+        return reporteRepository.ListarReporteIndicadores( nuIdAlmacen,periodo,tipoAccion,numeroDocumento,detalleReporte,page);
+
     }
 
 }

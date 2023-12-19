@@ -123,13 +123,17 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
     }
 
     @Override
-    public Pageable<List<ReporteEntity>> ListarReporteIndicadores(Integer nuIdAlmacen, String periodo,String tipoAccion,String numeroDocumento, Page p) throws Exception {
+
+    public Pageable<List<ReporteEntity>> ListarReporteIndicadores(Integer nuIdAlmacen, String periodo,String tipoAccion,
+                                                                  String numeroDocumento,String detalleReporte,Page p) throws Exception {
+
         try{
             StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Reporte_Indicadores_Listar");
             sp.registerStoredProcedureParameter("nuIdAlmacen", Integer.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("periodo", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("tipoAccion", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("numeroDocumento", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("detalleReporte", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("sortField", String.class, ParameterMode.IN);
@@ -139,6 +143,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             sp.setParameter("periodo", periodo);
             sp.setParameter("tipoAccion", tipoAccion);
             sp.setParameter("numeroDocumento", numeroDocumento);
+            sp.setParameter("detalleReporte", detalleReporte);
             sp.setParameter("pageNumber", p.getPageNumber());
             sp.setParameter("pageSize", p.getPageSize());
             sp.setParameter("sortField", p.getSortField());
@@ -156,13 +161,18 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
         List<ReporteEntity> items = new ArrayList<>();
         for (Object[] row : dataDb) {
             ReporteEntity item = new ReporteEntity();
-            item.setNombreAlmacen((String) row[0]);
+            item.setAlmacenOrigen((String) row[0]);
             item.setNuIdAlmacen((Integer) row[1]);
             item.setTipoAccion((String) row[2]);
             item.setCantidadTotalIngresos((Integer) row[3]);
             item.setCantidadTotalSalidas((Integer) row[4]);
+            item.setNuIdRecurso((Integer) row[5]);
+            item.setNombreCientifico((String) row[6]);
+            item.setNombreComun((String) row[7]);
+            item.setCantidad((BigDecimal) row[8]);
+            item.setTipoEspecie((String) row[9]);
             items.add(item);
-            pageable.setTotalRecords(SpUtil.toLong(row[5]));
+            pageable.setTotalRecords(SpUtil.toLong(row[10]));
 
         }
         pageable.setData(items);
