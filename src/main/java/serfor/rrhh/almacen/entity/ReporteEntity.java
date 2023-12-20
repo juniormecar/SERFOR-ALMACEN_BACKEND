@@ -51,7 +51,5 @@ public class ReporteEntity {
     private Integer cantidadTotalIngresos;
     private Integer cantidadTotalSalidas;
 
-    private Integer cantidadTotalIngresos;
-    private Integer cantidadTotalSalidas;
     private String detalleReporte;
 }
