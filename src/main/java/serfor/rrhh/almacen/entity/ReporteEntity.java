@@ -52,5 +52,5 @@ public class ReporteEntity {
     private Integer cantidadTotalSalidas;
 
     private String detalleReporte;
-    private BigDecimal CantidadTipo;
+    private BigDecimal cantidadTotalTipo;
 }

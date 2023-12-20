@@ -166,14 +166,10 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             item.setTipoAccion((String) row[2]);
             item.setCantidadTotalIngresos((Integer) row[3]);
             item.setCantidadTotalSalidas((Integer) row[4]);
-            item.setNuIdRecurso((Integer) row[5]);
-            item.setNombreCientifico((String) row[6]);
-            item.setNombreComun((String) row[7]);
-            item.setCantidad((BigDecimal) row[8]);
-            item.setTipoEspecie((String) row[9]);
-            item.setCantidadTipo((BigDecimal) row[11]);
+            item.setTipoEspecie((String) row[5]);
+            item.setCantidadTotalTipo((BigDecimal) row[6]);
             items.add(item);
-            pageable.setTotalRecords(SpUtil.toLong(row[10]));
+            pageable.setTotalRecords(SpUtil.toLong(row[7]));
 
         }
         pageable.setData(items);
