@@ -52,5 +52,7 @@ public class ReporteEntity {
     private Integer cantidadTotalSalidas;
 
     private String detalleReporte;
-    private BigDecimal cantidadTotalTipo;
+    private BigDecimal cantidadTotalMAD;
+    private BigDecimal cantidadTotalNOMAD;
+    private BigDecimal cantidadTotalFA;
 }
