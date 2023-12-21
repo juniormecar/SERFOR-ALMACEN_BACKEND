@@ -34,4 +34,13 @@ public class ReporteServiceImpl implements ReporteService{
 
     }
 
+    @Override
+
+    public Pageable<List<ReporteEntity>> ListarReporteDisponibilidad(Integer nuIdAlmacen,
+                                                                  String numeroDocumento, Page page)
+            throws Exception {
+        return reporteRepository.ListarReporteDisponibilidad( nuIdAlmacen,numeroDocumento,page);
+
+    }
+
 }

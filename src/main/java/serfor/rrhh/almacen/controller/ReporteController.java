@@ -71,4 +71,26 @@ public class ReporteController {
         }
     }
 
+    @GetMapping("/reporteDisponibilidad")
+    public Pageable<List<ReporteEntity>> ListarReporteDisponibilidad(@RequestParam(required = false) Integer nuIdAlmacen,
+                                                                  @RequestParam(required = false) String numeroDocumento,
+                                                                  @RequestParam(required = false, defaultValue = "1") Long pageNumber,
+                                                                  @RequestParam(required = false, defaultValue = "10") Long pageSize,
+                                                                  @RequestParam(required = false, defaultValue = "idAlmacen") String sortField,
+                                                                  @RequestParam(required = false, defaultValue = "DESC") String sortType)
+            throws Exception {
+
+        log.info("ReporteController - ListarReporteIndicadores", nuIdAlmacen,numeroDocumento);
+        Page p = new Page(pageNumber, pageSize, sortField, sortType);
+        try {
+            Pageable<List<ReporteEntity>> response = reporteService.ListarReporteDisponibilidad(nuIdAlmacen,numeroDocumento, p);
+
+            log.info("ReporteController - ListarReporteIndicadores", "Proceso realizado correctamente");
+            return response;
+        } catch (Exception e) {
+            log.error("ReporteController - ListarReporteIndicadores", "Ocurrió un error :" + e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
 }

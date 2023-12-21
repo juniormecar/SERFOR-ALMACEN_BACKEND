@@ -16,4 +16,7 @@ public interface ReporteService {
     Pageable<List<ReporteEntity>> ListarReporteIndicadores(Integer nuIdAlmacen,String periodo, String tipoAccion,
                                                            String numeroDocumento,String detalleReporte,Page page) throws Exception;
 
+    Pageable<List<ReporteEntity>> ListarReporteDisponibilidad(Integer nuIdAlmacen,
+                                                           String numeroDocumento,Page page) throws Exception;
+
 }

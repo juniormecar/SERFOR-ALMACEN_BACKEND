@@ -183,4 +183,61 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
         }
         return pageable;
     }
+
+    @Override
+
+    public Pageable<List<ReporteEntity>> ListarReporteDisponibilidad(Integer nuIdAlmacen,
+                                                                  String numeroDocumento,Page p) throws Exception {
+
+        try{
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Reporte_Disponibilidad_Listar");
+            sp.registerStoredProcedureParameter("nuIdAlmacen", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("numeroDocumento", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("pageNumber", Long.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("pageSize", Long.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("sortField", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("sortType", String.class, ParameterMode.IN);
+            SpUtil.enableNullParams(sp);
+            sp.setParameter("nuIdAlmacen", nuIdAlmacen);
+            sp.setParameter("numeroDocumento", numeroDocumento);
+            sp.setParameter("pageNumber", p.getPageNumber());
+            sp.setParameter("pageSize", p.getPageSize());
+            sp.setParameter("sortField", p.getSortField());
+            sp.setParameter("sortType", p.getSortType());
+            sp.execute();
+            return setResultDataListarReporteDisponibilidad(p, sp.getResultList());
+        } catch (Exception e) {
+            log.error("ListarReporteDisponibilidad"+"Ocurrió un error :" + e.getMessage());
+            return setResultDataListarReporteDisponibilidad(p, null);
+        }
+    }
+
+    private Pageable<List<ReporteEntity>> setResultDataListarReporteDisponibilidad(Page page, List<Object[]> dataDb) throws Exception {
+        Pageable<List<ReporteEntity>> pageable=new Pageable<>(page);
+        List<ReporteEntity> items = new ArrayList<>();
+        for (Object[] row : dataDb) {
+            ReporteEntity item = new ReporteEntity();
+            item.setNuIdAlmacen((Integer) row[0]);
+            item.setNombreAlmacen((String) row[1]);
+            item.setAtf((String) row[2]);
+            item.setPuestoControl((String) row[3]);
+            item.setCantidadCapacidadMAD((BigDecimal) row[4]);
+            item.setCantidadCapacidadNOMAD((BigDecimal) row[5]);
+            item.setCantidadCapacidadFA((BigDecimal) row[6]);
+            item.setCantidadTotalMAD((BigDecimal) row[7]);
+            item.setCantidadTotalNOMAD((BigDecimal) row[8]);
+            item.setCantidadTotalFA((BigDecimal) row[9]);
+            items.add(item);
+            pageable.setTotalRecords(SpUtil.toLong(row[10]));
+
+        }
+        pageable.setData(items);
+        pageable.setSuccess(true);
+        if(items.size()>0){
+            pageable.setMessage("Se obtuvo data.");
+        }else{
+            pageable.setMessage("No se encontró data.");
+        }
+        return pageable;
+    }
 }

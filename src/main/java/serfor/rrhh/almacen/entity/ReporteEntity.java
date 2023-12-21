@@ -55,4 +55,10 @@ public class ReporteEntity {
     private BigDecimal cantidadTotalMAD;
     private BigDecimal cantidadTotalNOMAD;
     private BigDecimal cantidadTotalFA;
+
+    private String atf;
+    private String puestoControl;
+    private BigDecimal cantidadCapacidadMAD;
+    private BigDecimal cantidadCapacidadNOMAD;
+    private BigDecimal cantidadCapacidadFA;
 }
