@@ -31,6 +31,7 @@ public class ReporteController {
                                                               @RequestParam(required = false) String numeroDocumento,
                                                               @RequestParam(required = false) String numeroActa,
                                                               @RequestParam(required = false) String tipo,
+                                                              @RequestParam(required = false) Integer nuIdTransferencia,
                                                               @RequestParam(required = false, defaultValue = "1") Long pageNumber,
                                                               @RequestParam(required = false, defaultValue = "10") Long pageSize,
                                                               @RequestParam(required = false, defaultValue = "idTransferencia") String sortField,
@@ -39,7 +40,7 @@ public class ReporteController {
         log.info("ReporteController - ListarReporteSalidas", tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo,fechaInicio,fechaFin,numeroDocumento);
         Page p = new Page(pageNumber, pageSize, sortField, sortType);
         try {
-            Pageable<List<ReporteEntity>> response = reporteService.ListarReporteSalidas(tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo,fechaInicio, fechaFin,numeroDocumento, numeroActa, tipo, p);
+            Pageable<List<ReporteEntity>> response = reporteService.ListarReporteSalidas(tipoTransferencia,nuIdAlmacen,tipoEspecie,periodo,fechaInicio, fechaFin,numeroDocumento, numeroActa, tipo, nuIdTransferencia, p);
             log.info("ReporteController - ListarReporteSalidas", "Proceso realizado correctamente");
             return response;
         } catch (Exception e) {

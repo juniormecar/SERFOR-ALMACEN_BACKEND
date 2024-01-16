@@ -24,4 +24,4 @@ jpa:
 
 login:
   api:
-    url: 'https://qa.serfor.gob.pe/seguridad'
+    url: 'https://ws.serfor.gob.pe/sgiseguridad'
