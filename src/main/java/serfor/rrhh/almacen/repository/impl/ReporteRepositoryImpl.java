@@ -114,6 +114,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             item.setFaunaSalida((String) row[22]);
             item.setTipoEspecie((String) row[23]);
             item.setUnidadMedida((String) row[24]);
+            item.setTipoIngreso((String) row[25]);
             items.add(item);
             pageable.setTotalRecords(SpUtil.toLong(row[21]));
 

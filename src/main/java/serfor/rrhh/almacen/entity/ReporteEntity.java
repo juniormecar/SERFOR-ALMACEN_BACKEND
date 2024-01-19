@@ -62,4 +62,6 @@ public class ReporteEntity {
     private BigDecimal cantidadCapacidadNOMAD;
     private BigDecimal cantidadCapacidadFA;
     private String unidadMedida;
+
+    private String tipoIngreso;
 }
