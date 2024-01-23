@@ -64,4 +64,6 @@ public class ReporteEntity {
     private String unidadMedida;
 
     private String tipoIngreso;
+
+    private BigDecimal cantidadTotalXtipoYunidadMedida;
 }
