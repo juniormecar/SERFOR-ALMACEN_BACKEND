@@ -66,4 +66,6 @@ public class ReporteEntity {
     private String tipoIngreso;
 
     private BigDecimal cantidadTotalXtipoYunidadMedida;
+
+    private String codigoUnico;
 }

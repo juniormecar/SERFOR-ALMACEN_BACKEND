@@ -52,4 +52,6 @@ public class HistorialRecursoProductoEntity {
     private BigDecimal saldoTotalM3Ingreso;
     private BigDecimal cantidadM3Salida;
     private BigDecimal saldoTotalM3Salida;
+
+    private String codigoUnico;
 }

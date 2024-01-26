@@ -71,6 +71,8 @@ public class RecursoProductoEntity {
     private String descSubProducto;
     private String descTipoAlmacenamiento;
 
+    private BigDecimal cantidadTotal;
+
     ;
 
 }
