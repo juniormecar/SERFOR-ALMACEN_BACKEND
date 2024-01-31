@@ -661,6 +661,7 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
             rpeEntity.setDisponibilidadActa((String) row[17]);
             rpeEntity.setCapacidadUnidad((String) row[18]);
             rpeEntity.setCantidadTotal((BigDecimal) row[19]);
+            rpeEntity.setNombreAlmacen((String) row[20]);
             items.add(rpeEntity);
             pageable.setTotalRecords(SpUtil.toLong(row[11]));
         }
