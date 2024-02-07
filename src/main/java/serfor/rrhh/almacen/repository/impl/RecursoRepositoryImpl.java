@@ -813,6 +813,7 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
             reEntity.setDescUnidadMedida((String) row[20]);
             reEntity.setDescSubProducto((String) row[21]);
             reEntity.setDescTipoAlmacenamiento((String) row[22]);
+            reEntity.setCantidadTotal((BigDecimal) row[24]);
             items.add(reEntity);
             pageable.setTotalRecords(SpUtil.toLong(row[23]));
 
@@ -853,6 +854,7 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
                 srepro.registerStoredProcedureParameter("tipoSubProducto", String.class, ParameterMode.IN);
                 srepro.registerStoredProcedureParameter("metroCubico", BigDecimal.class, ParameterMode.IN);
                 srepro.registerStoredProcedureParameter("disponibilidadActa", String.class, ParameterMode.IN);
+                srepro.registerStoredProcedureParameter("cantidadTotal", BigDecimal.class, ParameterMode.IN);
                 srepro.registerStoredProcedureParameter("IdRecursoProducto", Integer.class, ParameterMode.INOUT);
                 setStoreProcedureEnableNullParameters(srepro);
                 srepro.setParameter("IdRecurso", pro.getNuIdRecurso());
@@ -871,6 +873,7 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
                 srepro.setParameter("tipoSubProducto", pro.getTipoSubProducto());
                 srepro.setParameter("metroCubico", pro.getMetroCubico());
                 srepro.setParameter("disponibilidadActa", pro.getDisponibilidadActa());
+                srepro.setParameter("cantidadTotal", pro.getCantidadTotal());
 
                 srepro.execute();
                 //Integer idProductosReturn =(Integer)sppr.getOutputParameterValue("@IdRecursoProducto");
