@@ -100,7 +100,7 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                     srepro.registerStoredProcedureParameter("nuIdProductoRecurso", Integer.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("nuIdEspecie", Integer.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("nuIdUser", Integer.class, ParameterMode.IN);
-                    srepro.registerStoredProcedureParameter("nuCantidadProducto", Integer.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("nuCantidadProducto", BigDecimal.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("txTipoTransferencia", String.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("nombreComun", String.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("nombreCientifico", String.class, ParameterMode.IN);
@@ -143,6 +143,54 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
             result.setSuccess(false);
             result.setMessage("Ocurrió un error.");
             return result;
+        }
+    }
+
+    @Override
+    public ResultClassEntity RegistrarRetorno(List<ReporteEntity> lstReporte) {
+        ResultClassEntity resultClassEntity = new ResultClassEntity();
+
+
+        try {
+            for(ReporteEntity reporteEntity: lstReporte){
+                StoredProcedureQuery spr = em.createStoredProcedureQuery("almacen.[pa_Retorno_Registrar]");
+
+                spr.registerStoredProcedureParameter("nuIdRecurso", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("idEspecie", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("descontar", BigDecimal.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("descontarMetroCubico", BigDecimal.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("nuIdAlmacenOrigin", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("nuIdAlmacenDestino", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("nroActaTraslado", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("tipoTransferencia", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("tipoEspecie", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("nuIdTransferencia", Integer.class, ParameterMode.IN);
+                setStoreProcedureEnableNullParameters(spr);
+
+                spr.setParameter("nuIdRecurso", reporteEntity.getNuIdRecurso());
+                spr.setParameter("idEspecie", reporteEntity.getIdEspecie());
+                spr.setParameter("descontar", reporteEntity.getDescontar());
+                spr.setParameter("descontarMetroCubico", reporteEntity.getDescontarMetroCubico());
+                spr.setParameter("nuIdAlmacenOrigin", reporteEntity.getNuIdAlmacenOrigin());
+                spr.setParameter("nuIdAlmacenDestino", reporteEntity.getNuIdAlmacen());
+                spr.setParameter("nroActaTraslado", reporteEntity.getNroActa());
+                spr.setParameter("tipoTransferencia", reporteEntity.getTipoTransferenciaDetalle());
+                spr.setParameter("tipoEspecie", reporteEntity.getTipoEspecie());
+                spr.setParameter("nuIdTransferencia", reporteEntity.getNuIdTransferencia());
+
+                spr.execute();
+            }
+            resultClassEntity.setData(lstReporte);
+            resultClassEntity.setSuccess(true);
+            return resultClassEntity;
+
+        }
+
+        catch (Exception e) {
+            log.error("Recurso - registrarTransferencia" + "Ocurrió un error :" + e.getMessage());
+            resultClassEntity.setSuccess(false);
+            resultClassEntity.setMessage("Ocurrió un error.");
+            return resultClassEntity;
         }
     }
 

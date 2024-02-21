@@ -17,7 +17,7 @@ public class TransferenciaDetalleEntity {
     private Integer nuIdDetTransferencia;
     private Integer nuIdTransferencia;
     private Integer nuIdEspecie;
-    private Integer nuCantidadProducto;
+    private BigDecimal nuCantidadProducto;
     private String estado;
     private Integer nuIdUsuarioRegistro;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "America/Lima")
@@ -30,7 +30,7 @@ public class TransferenciaDetalleEntity {
     //
     private Integer nuIdRecursoProducto;
     private Integer idEspecie;
-    private Integer descontar;
+    private BigDecimal descontar;
 
     private String nombreComun;
     private String nombreCientifico;

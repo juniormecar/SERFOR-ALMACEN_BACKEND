@@ -30,7 +30,7 @@ public class ReporteEntity {
     private String txCodigoPuntoControl;
     private String txCodigoPuntoControlDetalle;
     private Integer idEspecie;
-    private Integer cantidadProducto;
+    private BigDecimal cantidadProducto;
     private String nombreComun;
     private String nombreCientifico;
     private String almacenOrigen;
@@ -68,4 +68,7 @@ public class ReporteEntity {
     private BigDecimal cantidadTotalXtipoYunidadMedida;
 
     private String codigoUnico;
+
+    private BigDecimal descontar;
+    private BigDecimal descontarMetroCubico;
 }

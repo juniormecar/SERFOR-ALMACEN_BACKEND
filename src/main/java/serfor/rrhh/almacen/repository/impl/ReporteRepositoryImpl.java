@@ -105,7 +105,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             item.setTxCodigoPuntoControl((String) row[12]);
             item.setTxCodigoPuntoControlDetalle((String) row[13]);
             item.setIdEspecie((Integer) row[14]);
-            item.setCantidadProducto((Integer) row[15]);
+            item.setCantidadProducto((BigDecimal) row[15]);
             item.setNombreComun((String) row[16]);
             item.setNombreCientifico((String) row[17]);
             item.setAlmacenOrigen((String) row[18]);
@@ -116,6 +116,7 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             item.setUnidadMedida((String) row[24]);
             item.setTipoIngreso((String) row[25]);
             item.setCodigoUnico((String) row[26]);
+            item.setNuIdAlmacenOrigin((Integer) row[27]);
             items.add(item);
             pageable.setTotalRecords(SpUtil.toLong(row[21]));
 

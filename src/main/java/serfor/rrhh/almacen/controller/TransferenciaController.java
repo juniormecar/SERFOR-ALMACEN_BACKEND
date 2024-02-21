@@ -40,6 +40,26 @@ public class TransferenciaController {
         }
     }
 
+    @PostMapping("/Retorno")
+    public ResponseEntity registrarRetorno(@RequestBody List<ReporteEntity> reporte){
+        log.info("Ingreso al metodo registrar");
+        ResponseEntity result = null;
+        ResultClassEntity response;
+
+        try{
+            response = transferenciaService.RegistrarRetorno(reporte);
+            if(response.getSuccess()){
+                log.info("registroRetorno - exitoso");
+                return new ResponseEntity(response, HttpStatus.OK);
+            }else {
+                return new ResponseEntity(response,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            log.error("Recurso -registroRetorno", "Ocurrió un error :" + e.getMessage());
+            return new ResponseEntity(null,null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("")
     public Pageable<List<TransferenciaEntity>> ListarTransferencia (@RequestParam(required = false) Integer nuIdAlmacen,
                                                                     @RequestParam(required = false) String documento,

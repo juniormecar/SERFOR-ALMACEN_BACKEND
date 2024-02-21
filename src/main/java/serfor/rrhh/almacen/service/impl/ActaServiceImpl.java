@@ -565,7 +565,7 @@ public class ActaServiceImpl implements ActaService {
                 cell.setFixedHeight(size);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Paragraph(recursoProductoEntity.getTxCantidadProducto() != null ? recursoProductoEntity.getTxCantidadProducto() : "", subTitulo2));
+                cell = new PdfPCell(new Paragraph(recursoProductoEntity.getTxCantidadProducto() != null ? String.valueOf(recursoProductoEntity.getTxCantidadProducto()) : "", subTitulo2));
                 cell.setFixedHeight(size);
                 table.addCell(cell);
 
@@ -742,7 +742,7 @@ public class ActaServiceImpl implements ActaService {
                 cell.setColspan(2);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Paragraph(recursoProductoEntity.getTxCantidadProducto() != null ? recursoProductoEntity.getTxCantidadProducto() : "", subTitulo2));
+                cell = new PdfPCell(new Paragraph(recursoProductoEntity.getTxCantidadProducto() != null ? String.valueOf(recursoProductoEntity.getTxCantidadProducto()) : "", subTitulo2));
                 cell.setFixedHeight(size);
                 table.addCell(cell);
 
@@ -809,7 +809,7 @@ public class ActaServiceImpl implements ActaService {
                 cell.setColspan(2);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Paragraph(recursoProductoEntity.getTxCantidadProducto() != null ? recursoProductoEntity.getTxCantidadProducto() : "", subTitulo2));
+                cell = new PdfPCell(new Paragraph(recursoProductoEntity.getTxCantidadProducto() != null ? String.valueOf(recursoProductoEntity.getTxCantidadProducto()) : "", subTitulo2));
                 cell.setFixedHeight(size);
                 table.addCell(cell);
 

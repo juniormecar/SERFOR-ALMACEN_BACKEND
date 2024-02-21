@@ -20,6 +20,11 @@ public class TransferenciaServiceImpl implements TransferenciaService {
     }
 
     @Override
+    public ResultClassEntity RegistrarRetorno(List<ReporteEntity> reporte) throws Exception {
+        return transferenciaRepository.RegistrarRetorno(reporte);
+    }
+
+    @Override
     public Pageable<List<TransferenciaEntity>> ListarTransferencia(Integer nuIdAlmacen,String documento,
                                                                    String tipoTransferencia,Integer nuIdTransferencia, Page page)
             throws Exception {
