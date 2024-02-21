@@ -117,6 +117,8 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             item.setTipoIngreso((String) row[25]);
             item.setCodigoUnico((String) row[26]);
             item.setNuIdAlmacenOrigin((Integer) row[27]);
+            item.setCantidadProductoRet((BigDecimal) row[28]);
+            item.setMetroCubicoRet((BigDecimal) row[29]);
             items.add(item);
             pageable.setTotalRecords(SpUtil.toLong(row[21]));
 

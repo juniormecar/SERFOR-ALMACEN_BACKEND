@@ -71,4 +71,7 @@ public class ReporteEntity {
 
     private BigDecimal descontar;
     private BigDecimal descontarMetroCubico;
+
+    private BigDecimal cantidadProductoRet;
+    private BigDecimal metroCubicoRet;
 }
