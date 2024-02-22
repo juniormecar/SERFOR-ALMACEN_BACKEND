@@ -22,6 +22,15 @@ jpa:
     hibernate.show_sql: true
     show-sql: true
 
+#Credencial Samba
+smb:
+  file:
+    server:
+      username: 'SERFOR\\oti26'
+      password: 'cV4X0$#R8s'
+      host: '10.0.4.182'
+      path: 'smb://10.0.4.182//SERFORLIMQAB03//Data_Almacen//prueba//'
+
 login:
   api:
     url: 'https://ws.serfor.gob.pe/sgiseguridad'

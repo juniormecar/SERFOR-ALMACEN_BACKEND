@@ -12,6 +12,8 @@ public class ResultClassEntity<S> implements Serializable {
     String StackTrace;
     String Informacion;
     Integer totalRecord;
+    String InnerException;
+
     S data;
 
     public ResultClassEntity() {
@@ -91,5 +93,9 @@ public class ResultClassEntity<S> implements Serializable {
         this.setMessage(messageError);
         this.setStackTrace(Arrays.toString(e.getStackTrace()));
         this.setMessageExeption(e.getMessage());
+    }
+
+    public void setInnerException(String innerException) {
+        InnerException = innerException;
     }
 }
