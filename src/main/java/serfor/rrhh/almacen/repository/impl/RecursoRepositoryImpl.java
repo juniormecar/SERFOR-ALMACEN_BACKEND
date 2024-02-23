@@ -388,6 +388,7 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
             reEntity.setPlaca((String) row[32]);
             reEntity.setFechaIngreso((Date) row[33]);
             reEntity.setHoraIngreso((String) row[34]);
+            reEntity.setNuIdArchivoRecurso((Integer) row[49]);
             RecursoPersonaEntity recursoPersonaEntity = new RecursoPersonaEntity();
             recursoPersonaEntity.setIdRecursoPersona((Integer) row[35] );
             recursoPersonaEntity.setTipoDocumento((String) row[36] );
@@ -501,7 +502,8 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
             reEntity.setMetroCubico((BigDecimal) row[20]);
             reEntity.setDisponibilidadActa((String) row[21]);
             reEntity.setCantidadTotal((BigDecimal) row[22]);
-            reEntity.setNuIdArchivo((Integer) row[23]);
+            reEntity.setNuIdArchivoRecursoProducto((Integer) row[23]);
+            reEntity.setNuIdArchivoRecurso((Integer) row[24]);
             items.add(reEntity);
             pageable.setTotalRecords(SpUtil.toLong(row[12]));
         }

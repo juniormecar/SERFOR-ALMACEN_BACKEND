@@ -43,4 +43,5 @@ public class ArchivoEntity {
     private Date fechaElimina;
     private String token;
     private Integer nuAlerta;
+    private byte[] bitFile;
 }

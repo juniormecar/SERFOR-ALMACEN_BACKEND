@@ -69,4 +69,6 @@ public class RecursoEntity {
     private RecursoPersonaEntity conductor;
 
     private String documentoSesion;
+
+    private Integer nuIdArchivoRecurso;
 }

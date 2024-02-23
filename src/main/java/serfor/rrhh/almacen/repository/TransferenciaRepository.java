@@ -15,4 +15,6 @@ public interface TransferenciaRepository {
     Pageable<List<TransferenciaEntity>> ListarReportesAvanzados(Integer nuIdAlmacen,
                                                             String tipoTransferencia, Integer nuIdTransferencia,String tipoTransferenciaDetalle,Page page) throws Exception;
 
+    ResultClassEntity<Integer> ActualizarTransferenciaArchivo(Integer nuIdTransferencia, Integer idArchivo, Integer idUsuario, String typeAccion);
+
 }

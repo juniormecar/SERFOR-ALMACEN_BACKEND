@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import serfor.rrhh.almacen.entity.*;
+import serfor.rrhh.almacen.repository.util.Constants;
 import serfor.rrhh.almacen.service.TransferenciaService;
 
 import java.util.List;
@@ -101,6 +102,26 @@ public class TransferenciaController {
         } catch (Exception e) {
             log.error("TransferenciaController - listar", "Ocurrió un error :" + e.getMessage());
             throw new Exception(e);
+        }
+    }
+
+    @PostMapping(path = "/actualizarTransferenciaArchivo")
+    public org.springframework.http.ResponseEntity<ResultClassEntity<Integer>> ActualizarTransferenciaArchivo(
+            @RequestBody TransferenciaEntity archivo) {
+        log.info("ArchivoController - eliminarArchivo", archivo.getNuIdArchivo(), archivo.getNuIdUsuarioElimina());
+        ResultClassEntity<Integer> response = new ResultClassEntity<>();
+        try {
+            response = transferenciaService.ActualizarTransferenciaArchivo(archivo.getNuIdTransferencia(), archivo.getNuIdArchivo(), archivo.getNuIdUsuarioModificacion(), archivo.getTypeAccion());
+            if (response.getSuccess()) {
+                log.info("ArchivoController - eliminarArchivo", "Proceso realizado correctamente");
+                return new org.springframework.http.ResponseEntity(response, HttpStatus.OK);
+            } else {
+                return new org.springframework.http.ResponseEntity(response, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            log.error("ArchivoController -eliminarArchivo", "Ocurrió un error :" + e.getMessage());
+            response.setError(Constants.MESSAGE_ERROR_500, e);
+            return new org.springframework.http.ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

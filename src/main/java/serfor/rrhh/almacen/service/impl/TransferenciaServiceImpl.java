@@ -37,4 +37,9 @@ public class TransferenciaServiceImpl implements TransferenciaService {
             throws Exception {
         return transferenciaRepository.ListarReportesAvanzados( nuIdAlmacen,tipoTransferencia,nuIdTransferencia,tipoTransferenciaDetalle, page);
     }
+
+    @Override
+    public ResultClassEntity<Integer> ActualizarTransferenciaArchivo(Integer nuIdTransferencia, Integer idArchivo, Integer idUsuario, String typeAccion) {
+        return transferenciaRepository.ActualizarTransferenciaArchivo(nuIdTransferencia, idArchivo, idUsuario, typeAccion);
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import serfor.rrhh.almacen.entity.ArchivoEntity;
 import serfor.rrhh.almacen.entity.ResultClassEntity;
+import serfor.rrhh.almacen.repository.util.Constants;
 import serfor.rrhh.almacen.service.ArchivoService;
 
 import java.io.IOException;
@@ -21,16 +22,17 @@ public class ArchivoController {
     private ArchivoService arServ;
     private static final org.apache.logging.log4j.Logger log = LogManager.getLogger(RecursoController.class);
 
-    @PostMapping("/cargarArchivoGeneralCod")
+    @PostMapping("/cargarArchivoGeneralCodRecurso")
     public ResponseEntity cargarArchivoGeneralCod(@RequestParam("file") MultipartFile file,
                                                   @RequestParam Integer IdUsuarioCreacion,
                                                   @RequestParam String TipoDocumento,
-                                                  @RequestParam Integer idRecursoProducto,
+                                                  @RequestParam(required = false) Integer idRecursoProducto,
+                                                  @RequestParam(required = false) Integer idRecurso,
                                                   @RequestParam String codigo) throws IOException {
         ResultClassEntity<Integer> response = new ResultClassEntity();
 
         try {
-            response = arServ.registrarArchivoGeneralCod(file, IdUsuarioCreacion, idRecursoProducto, TipoDocumento,codigo);
+            response = arServ.registrarArchivoGeneralCodRecurso(file, IdUsuarioCreacion,idRecurso, idRecursoProducto, TipoDocumento,codigo);
 
             if(response.getSuccess()){
                 log.info("ArchivoController - CargarArchivoGeneral", "Proceso realizado correctamente");
@@ -62,6 +64,50 @@ public class ArchivoController {
             log.error("ArchivoController - DescargarArchivoGeneral", "Ocurrió un error :" + e.getMessage());
             result.setInnerException (e.getMessage());
             return new org.springframework.http.ResponseEntity(result, HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @PostMapping(path = "/eliminarArchivo")
+    public org.springframework.http.ResponseEntity<ResultClassEntity<Integer>> eliminarArchivo(
+            @RequestBody ArchivoEntity archivo) {
+        log.info("ArchivoController - eliminarArchivo", archivo.getIdArchivo(), archivo.getIdUsuarioElimina());
+        ResultClassEntity<Integer> response = new ResultClassEntity<>();
+        try {
+            response = arServ.EliminarArchivoGeneral( archivo.getIdArchivo(), archivo.getIdUsuarioElimina());
+            if (response.getSuccess()) {
+                log.info("ArchivoController - eliminarArchivo", "Proceso realizado correctamente");
+                return new org.springframework.http.ResponseEntity(response, HttpStatus.OK);
+            } else {
+                return new org.springframework.http.ResponseEntity(response, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            log.error("ArchivoController -eliminarArchivo", "Ocurrió un error :" + e.getMessage());
+            response.setError(Constants.MESSAGE_ERROR_500, e);
+            return new org.springframework.http.ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/cargarArchivoGeneral")
+    public ResponseEntity cargarArchivoGeneral(@RequestParam("file") MultipartFile file,
+                                                  @RequestParam Integer IdUsuarioCreacion,
+                                                  @RequestParam String TipoDocumento,
+                                                  @RequestParam String codigo) throws IOException {
+        ResultClassEntity<Integer> response = new ResultClassEntity();
+
+        try {
+            response = arServ.registrarArchivoGeneral(file, IdUsuarioCreacion, TipoDocumento,codigo);
+
+            if(response.getSuccess()){
+                log.info("ArchivoController - CargarArchivoGeneral", "Proceso realizado correctamente");
+                return new org.springframework.http.ResponseEntity(response, HttpStatus.OK);
+            } else {
+                return new org.springframework.http.ResponseEntity(response, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setMessage("Se produjo un error al cargar archivo en Azure Container");
+            log.error("ArchivoController - CargarArchivoGeneral", "Ocurrió un error :" + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 }

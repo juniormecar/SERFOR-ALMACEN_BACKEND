@@ -324,5 +324,32 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
         return pageable;
     }
 
+    @Override
+    public ResultClassEntity<Integer> ActualizarTransferenciaArchivo(Integer nuIdTransferencia, Integer idArchivo, Integer idUsuario, String typeAccion) {
+
+        execActualizar(nuIdTransferencia, idArchivo, idUsuario, typeAccion);
+        ResultClassEntity<Integer> result = new ResultClassEntity<>();
+        result.setData(idArchivo);
+        result.setSuccess(true);
+        return result;
+    }
+    private void execActualizar(Integer nuIdTransferencia, Integer idArchivo, Integer idUsuario, String typeAccion) {
+        try {
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Transferencia_Actualizar_Archivo");
+            sp.registerStoredProcedureParameter("nuIdTransferencia", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("nuIdArchivo", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("typeAccion", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("nuIdUsuarioModifica", Integer.class, ParameterMode.IN);
+            sp.setParameter("nuIdTransferencia", nuIdTransferencia);
+            sp.setParameter("nuIdArchivo", idArchivo);
+            sp.setParameter("typeAccion", typeAccion);
+            sp.setParameter("nuIdUsuarioModifica", idUsuario);
+            sp.execute();
+        } catch (Exception e) {
+            log.error("TransferenciRepositoryImpl - execActualizar"+"Ocurrió un error :" + e.getMessage());
+            throw e;
+        }
+    }
+
 
 }

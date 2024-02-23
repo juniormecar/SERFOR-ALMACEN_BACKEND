@@ -72,7 +72,8 @@ public class RecursoProductoEntity {
     private String descTipoAlmacenamiento;
 
     private BigDecimal cantidadTotal;
-    private Integer nuIdArchivo;
+    private Integer nuIdArchivoRecurso;
+    private Integer nuIdArchivoRecursoProducto;
 
     ;
 

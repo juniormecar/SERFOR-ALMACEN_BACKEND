@@ -14,6 +14,7 @@ import serfor.rrhh.almacen.repository.ArchivoRepository;
 import serfor.rrhh.almacen.repository.util.FileServerConexion;
 import serfor.rrhh.almacen.service.ArchivoService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,19 +33,25 @@ public class ArchivoServiceImpl implements ArchivoService {
     private static final Logger log = LogManager.getLogger(ArchivoServiceImpl.class);
 
     @Override
-    public ResultClassEntity<Integer> registrarArchivoGeneralCod(MultipartFile file, Integer IdUsuarioCreacion, Integer idRecursoProducto,
+    public ResultClassEntity<Integer> registrarArchivoGeneralCodRecurso(MultipartFile file, Integer IdUsuarioCreacion,Integer idRecurso, Integer idRecursoProducto,
                                                                  String TipoDocumento, String codigo) throws Exception {
 
         ResultClassEntity<Integer> res = new ResultClassEntity();
 
-        //ParametroEntity e = new ParametroEntity();
-        //e.setCodigo(codigo);
         String path = codigo;
 
-        String nombreGenerado = fileCn.uploadFile(file, path);
+        if(idRecurso == null && idRecursoProducto == null){
+            log.error("ArchivoServiceImpl - RegistrarArchivoGeneral occurrio un error: Archivo no Cargado");
+            res.setMessage("No envia recurso o recursoProducto a cargar");
+            res.setSuccess(false);
+            return res;
+        }
+
+        //TODO CARGAFILE
+        //String nombreGenerado = fileCn.uploadFile(file, path);
         //String nombreGenerado = "CARGA PRUEBA";
 
-        if (!nombreGenerado.equals("") && path != null && !path.equals("")) {
+        if (file !=null && !file.isEmpty()) {
             ArchivoEntity archivo = new ArchivoEntity();
             archivo.setIdUsuarioRegistro(IdUsuarioCreacion);
             archivo.setTipoDocumento(TipoDocumento);
@@ -53,11 +60,14 @@ public class ArchivoServiceImpl implements ArchivoService {
             archivo.setExtension(file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."),
                     file.getOriginalFilename().length()));
             archivo.setNombre(file.getOriginalFilename());
-            archivo.setNombreGenerado((!nombreGenerado.equals("") ? nombreGenerado : file.getOriginalFilename()));
+            //archivo.setNombreGenerado((!nombreGenerado.equals("") ? nombreGenerado : file.getOriginalFilename()));
             archivo.setIdRecursoProducto(idRecursoProducto);
+            archivo.setIdRecurso(idRecurso);
+            archivo.setFile(file.getBytes());
+            archivo.setNombreGenerado(file.getOriginalFilename());
 
             log.info("ArchivoServiceImpl - RegistrarArchivoGeneral" + archivo.toString());
-            return arRepo.RegistrarArchivoGeneral(archivo);
+            return arRepo.registrarArchivoGeneralCodRecurso(archivo);
 
         } else {
             log.error("ArchivoServiceImpl - RegistrarArchivoGeneral occurrio un error: Archivo no Cargado");
@@ -71,4 +81,46 @@ public class ArchivoServiceImpl implements ArchivoService {
     public ResultClassEntity DescargarArchivoGeneral(ArchivoEntity param) {
         return arRepo.DescargarArchivoGeneral(param);
     }
+
+    @Override
+    public ResultClassEntity<Integer> EliminarArchivoGeneral(Integer idArchivo, Integer idUsuario) {
+        return arRepo.EliminarArchivoGeneral(idArchivo, idUsuario);
+    }
+
+    @Override
+    public ResultClassEntity<Integer> registrarArchivoGeneral(MultipartFile file, Integer IdUsuarioCreacion,
+                                                                        String TipoDocumento, String codigo) throws Exception {
+
+        ResultClassEntity<Integer> res = new ResultClassEntity();
+
+        String path = codigo;
+
+        //TODO CARGAFILE
+        //String nombreGenerado = fileCn.uploadFile(file, path);
+        //String nombreGenerado = "CARGA PRUEBA";
+
+        if (file !=null && !file.isEmpty()) {
+            ArchivoEntity archivo = new ArchivoEntity();
+            archivo.setIdUsuarioRegistro(IdUsuarioCreacion);
+            archivo.setTipoDocumento(TipoDocumento);
+            archivo.setEstado("A");
+            archivo.setRuta(fileServerPath + path);
+            archivo.setExtension(file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."),
+                    file.getOriginalFilename().length()));
+            archivo.setNombre(file.getOriginalFilename());
+            //archivo.setNombreGenerado((!nombreGenerado.equals("") ? nombreGenerado : file.getOriginalFilename()));
+            archivo.setFile(file.getBytes());
+            archivo.setNombreGenerado(file.getOriginalFilename());
+
+            log.info("ArchivoServiceImpl - RegistrarArchivoGeneral" + archivo.toString());
+            return arRepo.registrarArchivoGeneral(archivo);
+
+        } else {
+            log.error("ArchivoServiceImpl - RegistrarArchivoGeneral occurrio un error: Archivo no Cargado");
+            res.setMessage("Archivo no Cargado");
+            res.setSuccess(false);
+            return res;
+        }
+    }
+
 }

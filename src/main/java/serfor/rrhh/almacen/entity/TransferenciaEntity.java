@@ -53,4 +53,7 @@ public class TransferenciaEntity {
     private String faunaSalida;
 
     private String tipoEspecie;
+
+    private Integer nuIdArchivo;
+    private String typeAccion;
 }

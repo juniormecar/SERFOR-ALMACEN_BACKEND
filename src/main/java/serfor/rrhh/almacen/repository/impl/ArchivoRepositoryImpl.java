@@ -41,7 +41,7 @@ public class ArchivoRepositoryImpl extends JdbcDaoSupport implements ArchivoRepo
 
     private static final org.apache.logging.log4j.Logger log = LogManager.getLogger(ActaRepositoryImpl.class);
     @Override
-    public ResultClassEntity<Integer> RegistrarArchivoGeneral(ArchivoEntity request) throws Exception {
+    public ResultClassEntity<Integer> registrarArchivoGeneralCodRecurso(ArchivoEntity request) throws Exception {
 
         ResultClassEntity<Integer> result = new ResultClassEntity<>();
 
@@ -53,6 +53,7 @@ public class ArchivoRepositoryImpl extends JdbcDaoSupport implements ArchivoRepo
             sp.registerStoredProcedureParameter("extension", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("tipoDocumento", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("idUsuarioRegistro", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("bitFile", byte[].class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("idArchivo", Integer.class, ParameterMode.OUT);
             SpUtil.enableNullParams(sp);
             sp.setParameter("ruta", request.getRuta());
@@ -61,15 +62,18 @@ public class ArchivoRepositoryImpl extends JdbcDaoSupport implements ArchivoRepo
             sp.setParameter("extension", request.getExtension());
             sp.setParameter("tipoDocumento", request.getTipoDocumento());
             sp.setParameter("idUsuarioRegistro", request.getIdUsuarioRegistro());
+            sp.setParameter("bitFile", request.getFile());
             sp.execute();
 
             Integer idArchivo = (Integer) sp.getOutputParameterValue("idArchivo");
 
             if(idArchivo > 0){
                 StoredProcedureQuery spa = em.createStoredProcedureQuery("almacen.pa_Actualizar_Recurso_Archivo");
+                spa.registerStoredProcedureParameter("nuIdRecurso", Integer.class, ParameterMode.IN);
                 spa.registerStoredProcedureParameter("nuIdRecursoProducto", Integer.class, ParameterMode.IN);
                 spa.registerStoredProcedureParameter("nuIdArchivo", Integer.class, ParameterMode.IN);
                 SpUtil.enableNullParams(spa);
+                spa.setParameter("nuIdRecurso", request.getIdRecurso());
                 spa.setParameter("nuIdRecursoProducto", request.getIdRecursoProducto());
                 spa.setParameter("nuIdArchivo", idArchivo);
                 spa.execute();
@@ -105,12 +109,11 @@ public class ArchivoRepositoryImpl extends JdbcDaoSupport implements ArchivoRepo
             List<Object[]> spResult_ = processStored.getResultList();
             ResultArchivoEntity resultArchivo = new ResultArchivoEntity();
             for (Object[] row_ : spResult_) {
-
-
                 String ruta = ((String) row_[1]);
                 String nombreArchivoGenerado = ((String) row_[4]);
                 String nombreArchivo = ((String) row_[2]);
-                byte[] byteFile = fileServerConexion.loadFileAsResource(nombreArchivoGenerado,ruta);
+                byte[] byteFile = ((byte[]) row_[6]);
+                //byte[] byteFile = fileServerConexion.loadFileAsResource(nombreArchivoGenerado,ruta);
                 resultArchivo.setArchivo(byteFile);
                 resultArchivo.setNombeArchivo(nombreArchivo);
                 resultArchivo.setContenTypeArchivo("application/octet-stream");
@@ -127,6 +130,70 @@ public class ArchivoRepositoryImpl extends JdbcDaoSupport implements ArchivoRepo
             result.setSuccess(false);
             result.setMessage("Ocurrió un error.");
             result.setData(null);
+            return result;
+        }
+    }
+
+    @Override
+    public ResultClassEntity<Integer> EliminarArchivoGeneral(Integer idArchivo, Integer idUsuario) {
+
+        execEliminar(idArchivo, idUsuario);
+        ResultClassEntity<Integer> result = new ResultClassEntity<>();
+        result.setData(idArchivo);
+        result.setSuccess(true);
+        return result;
+    }
+    private void execEliminar(Integer idArchivo, Integer idUsuario) {
+        try {
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Archivo_Eliminar");
+            sp.registerStoredProcedureParameter("idArchivo", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("idUsuarioElimina", Integer.class, ParameterMode.IN);
+            sp.setParameter("idArchivo", idArchivo);
+            sp.setParameter("idUsuarioElimina", idUsuario);
+            sp.execute();
+        } catch (Exception e) {
+            log.error("ArchivoRepositoryImpl - execEliminar"+"Ocurrió un error :" + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public ResultClassEntity<Integer> registrarArchivoGeneral(ArchivoEntity request) throws Exception {
+
+        ResultClassEntity<Integer> result = new ResultClassEntity<>();
+
+        try {
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_ArchivoGeneral_Registrar");
+            sp.registerStoredProcedureParameter("ruta", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("nombre", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("nombreGenerado", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("extension", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("tipoDocumento", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("idUsuarioRegistro", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("bitFile", byte[].class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("idArchivo", Integer.class, ParameterMode.OUT);
+            SpUtil.enableNullParams(sp);
+            sp.setParameter("ruta", request.getRuta());
+            sp.setParameter("nombre", request.getNombre());
+            sp.setParameter("nombreGenerado", request.getNombreGenerado());
+            sp.setParameter("extension", request.getExtension());
+            sp.setParameter("tipoDocumento", request.getTipoDocumento());
+            sp.setParameter("idUsuarioRegistro", request.getIdUsuarioRegistro());
+            sp.setParameter("bitFile", request.getFile());
+            sp.execute();
+
+            Integer idArchivo = (Integer) sp.getOutputParameterValue("idArchivo");
+
+            result.setCodigo(idArchivo);
+            result.setData(idArchivo);
+            result.setMessage("Información Registrada");
+            result.setSuccess(true);
+            return result;
+        } catch (Exception e) {
+            log.error("ArchivoRepositoryImpl - registrarArchivoGeneral"+"Ocurrió un error :" + e.getMessage());
+            result.setCodigo(0);
+            result.setSuccess(false);
+            result.setMessage("Ocurrió un error.");
             return result;
         }
     }
