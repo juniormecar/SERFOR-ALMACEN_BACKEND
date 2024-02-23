@@ -43,4 +43,9 @@ public class AlmacenServiceImpl implements AlmacenService {
         return almacenRepository.EliminarAlmacenResponsable(idAlmacenResponsable, idUsuarioElimina);
     }
 
+    @Override
+    public AlmacenEntity getAlmacen(Integer idAlmacen)throws Exception {
+        return almacenRepository.getAlmacen( idAlmacen);
+    }
+
 }

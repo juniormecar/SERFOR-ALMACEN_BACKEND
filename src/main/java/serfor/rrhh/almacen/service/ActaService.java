@@ -1,8 +1,10 @@
 package serfor.rrhh.almacen.service;
 
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.web.bind.annotation.RequestBody;
 import serfor.rrhh.almacen.entity.ActaEntity;
 import serfor.rrhh.almacen.entity.ResultClassEntity;
+import serfor.rrhh.almacen.entity.TransferenciaEntity;
 
 import java.util.List;
 

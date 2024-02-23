@@ -44,4 +44,7 @@ public class AlmacenEntity {
     private BigDecimal capacidadNoMaderable;
     private BigDecimal capacidadFauna;
     private BigDecimal capacidadMaderable;
+    private String departamento;
+    private String provincia;
+    private String distrito;
 }

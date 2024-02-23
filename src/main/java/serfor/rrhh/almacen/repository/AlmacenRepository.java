@@ -12,4 +12,6 @@ public interface AlmacenRepository {
     ResultClassEntity RegistroAlmacen(AlmacenEntity almacen) throws Exception;
     Pageable<List<AlmacenResponsableEntity>> ListarAlmacenResponsable(Integer nuIdAlmacen,String numeroDocumento, Page page) throws Exception;
     ResultClassEntity EliminarAlmacenResponsable(Integer idAlmacenResponsable,Integer idUsuarioElimina) throws Exception;
+
+    AlmacenEntity getAlmacen(Integer idAlmacen) throws Exception;
 }

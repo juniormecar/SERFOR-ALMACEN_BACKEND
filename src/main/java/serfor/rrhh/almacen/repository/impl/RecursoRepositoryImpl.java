@@ -483,7 +483,7 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
             reEntity.setFeFechaRegistro((Date) row[0]);
             reEntity.setNuIdRecursoProducto((Integer) row[1]);
             reEntity.setNuIdRecurso((Integer) row[2]);
-            reEntity.setTxCantidadProducto((String) row[3]);
+            reEntity.setTxCantidadProducto((BigDecimal) row[3]);
             reEntity.setTxTotalProducto((String) row[4]);
             reEntity.setTxEstado((String) row[5]);
             reEntity.setIdUsuarioRegistro((Integer) row[6]);
@@ -553,7 +553,7 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
             reEntity.setFeFechaRegistro((Date) row[0]);
             reEntity.setNuIdRecursoProducto((Integer) row[1]);
             reEntity.setNuIdRecurso((Integer) row[2]);
-            reEntity.setTxCantidadProducto((String) row[3]);
+            reEntity.setTxCantidadProducto((BigDecimal) row[3]);
             reEntity.setTxTotalProducto((String) row[4]);
             reEntity.setTxEstado((String) row[5]);
             reEntity.setIdUsuarioRegistro((Integer) row[6]);
@@ -649,7 +649,7 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
             rpeEntity.setNumeroActa((String)row[1]);
             rpeEntity.setNombreCientifico((String) row[2]);
             rpeEntity.setNombreComun((String) row[3]);
-            rpeEntity.setTxCantidadProducto(String.valueOf((BigDecimal) row[4]));
+            rpeEntity.setTxCantidadProducto((BigDecimal) row[4]);
             rpeEntity.setTipoProducto((String) row[5]);
             rpeEntity.setUnidadMedida((String) row[6]);
             rpeEntity.setNuIdRecurso((Integer) row[7]);
@@ -800,7 +800,7 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
             reEntity.setTipoIngreso((String) row[4]);
             reEntity.setDisponibilidadActa((String) row[5]);
             reEntity.setNombreAlmacen((String) row[6]);
-            reEntity.setTxCantidadProducto((String) row[7]);
+            reEntity.setTxCantidadProducto((BigDecimal) row[7]);
             reEntity.setIdEspecie((Integer) row[8]);
             reEntity.setTipoProducto((String) row[9]);
             reEntity.setUnidadMedida((String) row[10]);
