@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import serfor.rrhh.almacen.entity.*;
+import serfor.rrhh.almacen.service.ActaSalidaService;
 import serfor.rrhh.almacen.service.ActaService;
 
 import java.util.List;
@@ -18,6 +19,10 @@ public class ActaController {
 
     @Autowired
     private ActaService actaService;
+
+    @Autowired
+    private ActaSalidaService actaSalidaService;
+
 
     private static final org.apache.logging.log4j.Logger log = LogManager.getLogger(ActaController.class);
 
@@ -88,6 +93,30 @@ public class ActaController {
             result.setContenTypeArchivo("application/octet-stream");
             result.setSuccess(true);
             result.setMessage("Se generó el consolidado del Acta de los artículos.");
+            if (!result.getSuccess()) {
+                return new org.springframework.http.ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+            } else {
+                log.info("ActaController - consolidadoActa_PDF", "Proceso realizado correctamente");
+                return new org.springframework.http.ResponseEntity<>(result, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            log.error("ActaController - consolidadoActa_PDF", "Ocurrió un error :"+ e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
+    @GetMapping(path = "/pdf/actaSalida")
+    public ResponseEntity<ResultArchivoEntity> consolidadoActaSalida_PDF(@RequestBody List<TransferenciaEntity> transferencia)
+            throws Exception {
+        ResultArchivoEntity result = new ResultArchivoEntity();
+        log.info("ActaController - consolidadoActaSalida_PDF", transferencia);
+        try {
+            ByteArrayResource bytes = actaSalidaService.consolidadoActaSalida_PDF(transferencia);
+            result.setArchivo(bytes.getByteArray());
+            result.setNombeArchivo("consolidadoActaSalida.pdf");
+            result.setContenTypeArchivo("application/octet-stream");
+            result.setSuccess(true);
+            result.setMessage("Se generó el consolidado del Acta de salida.");
             if (!result.getSuccess()) {
                 return new org.springframework.http.ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
             } else {
