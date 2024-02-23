@@ -18,7 +18,7 @@ public class RecursoProductoEntity {
     private Integer nuIdRecursoProducto;
     private RecursoEntity recurso;
     private ProductoEntity producto;
-    private String txCantidadProducto;
+    private BigDecimal txCantidadProducto;
     private String txTotalProducto;
     private String txEstado;
     private Integer idUsuarioRegistro;
