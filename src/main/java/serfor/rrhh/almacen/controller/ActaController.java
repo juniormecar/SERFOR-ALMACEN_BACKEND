@@ -105,7 +105,7 @@ public class ActaController {
         }
     }
 
-    @GetMapping(path = "/pdf/actaSalida")
+    @PostMapping(path = "/pdf/actaSalida")
     public ResponseEntity<ResultArchivoEntity> consolidadoActaSalida_PDF(@RequestBody List<TransferenciaEntity> transferencia)
             throws Exception {
         ResultArchivoEntity result = new ResultArchivoEntity();

@@ -41,5 +41,7 @@ public class TransferenciaDetalleEntity {
     private String disponibilidadActa;
 
     private String nombreAlmacen;
+    private String numeroActa;
+    private String txCantidadProducto;
 
 }
