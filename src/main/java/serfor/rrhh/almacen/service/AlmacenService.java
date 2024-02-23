@@ -15,4 +15,7 @@ public interface AlmacenService {
     Pageable<List<AlmacenResponsableEntity>> ListarAlmacenResponsable(Integer nuIdAlmacen,String numeroDocumento, Page page) throws Exception;
 
     ResultClassEntity EliminarAlmacenResponsable(Integer idAlmacenResponsable,Integer idUsuarioElimina) throws Exception;
+
+    AlmacenEntity getAlmacen(Integer idAlmacen) throws Exception;
+
 }

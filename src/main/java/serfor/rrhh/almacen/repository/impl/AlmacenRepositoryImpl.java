@@ -69,6 +69,21 @@ public class AlmacenRepositoryImpl extends JdbcDaoSupport implements AlmacenRepo
         }
     }
 
+    @Override
+    public AlmacenEntity getAlmacen(Integer idAlmacen) throws Exception {
+        try{
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Almacen_obtener");
+            sp.registerStoredProcedureParameter("nuIdAlmacen", Integer.class, ParameterMode.IN);
+            SpUtil.enableNullParams(sp);
+            sp.setParameter("nuIdAlmacen", idAlmacen);
+            sp.execute();
+            return setResultDataListarAlmacen(sp.getResultList());
+        } catch (Exception e) {
+            log.error("AlmacenRepositoryImpl - listar"+"Ocurrió un error :" + e.getMessage());
+            return setResultDataListarAlmacen(null);
+        }
+    }
+
     private Pageable<List<AlmacenEntity>> setResultDataListarAlmacen(Page page, List<Object[]> dataDb) throws Exception {
         Pageable<List<AlmacenEntity>> pageable=new Pageable<>(page);
         List<AlmacenEntity> items = new ArrayList<>();
@@ -100,6 +115,9 @@ public class AlmacenRepositoryImpl extends JdbcDaoSupport implements AlmacenRepo
             item.setCapacidadNoMaderable((BigDecimal) row[24]);
             item.setCapacidadFauna((BigDecimal) row[25]);
             item.setCapacidadMaderable((BigDecimal) row[26]);
+            item.setDepartamento((String) row[27]);
+            item.setProvincia((String) row[28]);
+            item.setDistrito((String) row[29]);
             items.add(item);
             pageable.setTotalRecords(SpUtil.toLong(row[17]));
 
@@ -113,6 +131,43 @@ public class AlmacenRepositoryImpl extends JdbcDaoSupport implements AlmacenRepo
             pageable.setMessage("No se encontró data.");
         }
         return pageable;
+    }
+
+    private AlmacenEntity setResultDataListarAlmacen(List<Object[]> dataDb) throws Exception {
+        AlmacenEntity item = new AlmacenEntity();
+        for (Object[] row : dataDb) {
+            item.setNuIdAlmacen((Integer) row[0]);
+            item.setTxUbigeo((String) row[1]);
+            item.setTxNombreAlmacen((String) row[2]);
+            item.setTxTipoAlmacen((String) row[3]);
+            item.setTxTipoDocumento((String) row[4]);
+            item.setTxNumeroDocumento((String) row[5]);
+            item.setTxNombresEncargado((String) row[6]);
+            item.setNuCapacidadAlmacen((BigDecimal) row[7]);
+            item.setNuIdUsuarioModificacion((Integer) row[8]);
+            item.setFeFechaModificacion((Date) row[9]);
+            item.setTxEstado((String) row[10]);
+            item.setNuIdUsuarioElimina((Integer) row[11]);
+            item.setFeFechaElimina((Date) row[12]);
+            item.setNuIdUsuarioRegistro((Integer) row[13]);
+            item.setFeFechaRegistro((Date) row[14]);
+            item.setTxPuestoControl((String) row[15]);
+            item.setTxNumeroATF((String) row[16]);
+            item.setDescrATF((String) row[17]);
+            item.setDescrPuestoControl((String) row[18]);
+            item.setDescrTipoAlmacen((String) row[19]);
+            item.setFoto((String) row[20]);
+            item.setCantidadResponsables((Integer) row[21]);
+            item.setDireccionAlmacen((String) row[22]);
+            item.setCapacidadNoMaderable((BigDecimal) row[23]);
+            item.setCapacidadFauna((BigDecimal) row[24]);
+            item.setCapacidadMaderable((BigDecimal) row[25]);
+            item.setDepartamento((String) row[26]);
+            item.setProvincia((String) row[27]);
+            item.setDistrito((String) row[28]);
+        }
+
+        return item;
     }
 
     @Override
