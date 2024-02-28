@@ -844,7 +844,7 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
                 StoredProcedureQuery srepro = em.createStoredProcedureQuery("almacen.pa_Recurso_Producto_Registrar");
                 srepro.registerStoredProcedureParameter("IdRecurso", Integer.class, ParameterMode.IN);
                 srepro.registerStoredProcedureParameter("IdEspecie", Integer.class, ParameterMode.IN);
-                srepro.registerStoredProcedureParameter("CantidadProducto", String.class, ParameterMode.IN);
+                srepro.registerStoredProcedureParameter("CantidadProducto", BigDecimal.class, ParameterMode.IN);
                 srepro.registerStoredProcedureParameter("TotalProducto", String.class, ParameterMode.IN);
                 srepro.registerStoredProcedureParameter("IdUsuarioRegistro", Integer.class, ParameterMode.IN);
                 srepro.registerStoredProcedureParameter("tipoProducto", String.class, ParameterMode.IN);
