@@ -7,8 +7,6 @@ public interface ArchivoRepository {
     ResultClassEntity<Integer> registrarArchivoGeneralCodRecurso(ArchivoEntity request) throws Exception;
     ResultClassEntity DescargarArchivoGeneral(ArchivoEntity param) ;
     ResultClassEntity<Integer> EliminarArchivoGeneral(Integer idArchivo, Integer idUsuario);
-
     ResultClassEntity<Integer> registrarArchivoGeneral(ArchivoEntity request) throws Exception;
-
 
 }

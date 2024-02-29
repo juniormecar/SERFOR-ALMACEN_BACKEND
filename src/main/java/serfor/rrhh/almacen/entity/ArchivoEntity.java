@@ -26,6 +26,8 @@ public class ArchivoEntity {
     private Integer idRecursoProducto;
     private Integer idRecurso;
     private String estado;
+    private String type;
+
     // @Column(name = "NU_ID_USUARIO_REGISTRO",  nullable = false)
     private Integer idUsuarioRegistro;
     // @Column(name = "FE_FECHA_REGISTRO",  nullable = false)
