@@ -18,7 +18,6 @@ import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 import javax.sql.DataSource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -51,6 +50,7 @@ public class ArchivoRepositoryImpl extends JdbcDaoSupport implements ArchivoRepo
             sp.registerStoredProcedureParameter("nombre", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("nombreGenerado", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("extension", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("tipoArchivo", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("tipoDocumento", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("idUsuarioRegistro", Integer.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("bitFile", byte[].class, ParameterMode.IN);
@@ -60,6 +60,7 @@ public class ArchivoRepositoryImpl extends JdbcDaoSupport implements ArchivoRepo
             sp.setParameter("nombre", request.getNombre());
             sp.setParameter("nombreGenerado", request.getNombreGenerado());
             sp.setParameter("extension", request.getExtension());
+            sp.setParameter("tipoArchivo", request.getType());
             sp.setParameter("tipoDocumento", request.getTipoDocumento());
             sp.setParameter("idUsuarioRegistro", request.getIdUsuarioRegistro());
             sp.setParameter("bitFile", request.getFile());
@@ -112,10 +113,14 @@ public class ArchivoRepositoryImpl extends JdbcDaoSupport implements ArchivoRepo
                 String ruta = ((String) row_[1]);
                 String nombreArchivoGenerado = ((String) row_[4]);
                 String nombreArchivo = ((String) row_[2]);
+                String txExtension = ((String) row_[3]);
                 byte[] byteFile = ((byte[]) row_[6]);
+                String typeFile = ((String) row_[7]);
                 //byte[] byteFile = fileServerConexion.loadFileAsResource(nombreArchivoGenerado,ruta);
                 resultArchivo.setArchivo(byteFile);
                 resultArchivo.setNombeArchivo(nombreArchivo);
+                resultArchivo.setTxExtension(txExtension);
+                resultArchivo.setTypeFile(typeFile);
                 resultArchivo.setContenTypeArchivo("application/octet-stream");
                 resultArchivo.setSuccess(true);
                 resultArchivo.setMessage("Se descargo el archivo del file server  con éxito.");
@@ -168,6 +173,7 @@ public class ArchivoRepositoryImpl extends JdbcDaoSupport implements ArchivoRepo
             sp.registerStoredProcedureParameter("nombre", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("nombreGenerado", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("extension", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("tipoArchivo", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("tipoDocumento", String.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("idUsuarioRegistro", Integer.class, ParameterMode.IN);
             sp.registerStoredProcedureParameter("bitFile", byte[].class, ParameterMode.IN);
@@ -177,6 +183,7 @@ public class ArchivoRepositoryImpl extends JdbcDaoSupport implements ArchivoRepo
             sp.setParameter("nombre", request.getNombre());
             sp.setParameter("nombreGenerado", request.getNombreGenerado());
             sp.setParameter("extension", request.getExtension());
+            sp.setParameter("tipoArchivo", request.getType());
             sp.setParameter("tipoDocumento", request.getTipoDocumento());
             sp.setParameter("idUsuarioRegistro", request.getIdUsuarioRegistro());
             sp.setParameter("bitFile", request.getFile());

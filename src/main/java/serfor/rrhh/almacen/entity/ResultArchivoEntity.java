@@ -18,6 +18,24 @@ public class ResultArchivoEntity implements Serializable {
     private String ContenTypeArchivo;
     private byte[] Archivo;
     private String Informacion;
+    private String typeFile;
+    private String txExtension;
+
+    public String getTypeFile() {
+        return typeFile;
+    }
+
+    public void setTypeFile(String typeFile) {
+        this.typeFile = typeFile;
+    }
+
+    public String getTxExtension() {
+        return txExtension;
+    }
+
+    public void setTxExtension(String txExtension) {
+        this.txExtension = txExtension;
+    }
     public Integer getCodigo() {
         return Codigo;
     }

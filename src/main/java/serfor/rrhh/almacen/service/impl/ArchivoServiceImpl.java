@@ -64,6 +64,7 @@ public class ArchivoServiceImpl implements ArchivoService {
             archivo.setIdRecursoProducto(idRecursoProducto);
             archivo.setIdRecurso(idRecurso);
             archivo.setFile(file.getBytes());
+            archivo.setType(file.getContentType());
             archivo.setNombreGenerado(file.getOriginalFilename());
 
             log.info("ArchivoServiceImpl - RegistrarArchivoGeneral" + archivo.toString());
@@ -110,6 +111,7 @@ public class ArchivoServiceImpl implements ArchivoService {
             archivo.setNombre(file.getOriginalFilename());
             //archivo.setNombreGenerado((!nombreGenerado.equals("") ? nombreGenerado : file.getOriginalFilename()));
             archivo.setFile(file.getBytes());
+            archivo.setType(file.getContentType());
             archivo.setNombreGenerado(file.getOriginalFilename());
 
             log.info("ArchivoServiceImpl - RegistrarArchivoGeneral" + archivo.toString());
