@@ -137,6 +137,7 @@ public class HistorialRecursoProductoRepositoryImpl extends JdbcDaoSupport imple
             hrpEntity.setTipoProducto((String) row[18]);
             hrpEntity.setUnidadMedida((String) row[19]);
             hrpEntity.setCodigoUnico((String) row[20]);
+            hrpEntity.setNroActa((String) row[21]);
             items.add(hrpEntity);
             pageable.setTotalRecords(SpUtil.toLong(row[10]));
         }

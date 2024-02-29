@@ -167,6 +167,7 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                 spr.registerStoredProcedureParameter("nombreComun", String.class, ParameterMode.IN);
                 spr.registerStoredProcedureParameter("nombreCientifico", String.class, ParameterMode.IN);
                 spr.registerStoredProcedureParameter("numeroActaRetorno", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("nuIdTransferenciaDetalle", Integer.class, ParameterMode.IN);
                 spr.registerStoredProcedureParameter("nuIdTransferencia", Integer.class, ParameterMode.IN);
                 setStoreProcedureEnableNullParameters(spr);
 
@@ -182,6 +183,7 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                 spr.setParameter("nombreComun", reporteEntity.getNombreComun());
                 spr.setParameter("nombreCientifico", reporteEntity.getNombreCientifico());
                 spr.setParameter("numeroActaRetorno", reporteEntity.getNumeroActaRetorno());
+                spr.setParameter("nuIdTransferenciaDetalle", reporteEntity.getNuIdTransferenciaDetalle());
                 spr.setParameter("nuIdTransferencia", reporteEntity.getNuIdTransferencia());
 
                 spr.execute();

@@ -78,4 +78,6 @@ public class ReporteEntity {
     private Integer nuIdArchivoTransferencia;
 
     public String numeroActaRetorno;
+
+    private Integer nuIdTransferenciaDetalle;
 }
