@@ -76,4 +76,6 @@ public class ReporteEntity {
     private BigDecimal metroCubicoRet;
 
     private Integer nuIdArchivoTransferencia;
+
+    public String numeroActaRetorno;
 }
