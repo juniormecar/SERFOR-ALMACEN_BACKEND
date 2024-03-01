@@ -80,4 +80,5 @@ public class ReporteEntity {
     public String numeroActaRetorno;
 
     private Integer nuIdTransferenciaDetalle;
+    public String nroResolucion;
 }
