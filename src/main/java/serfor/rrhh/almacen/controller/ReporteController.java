@@ -49,6 +49,7 @@ public class ReporteController {
         }
     }
 
+    /**apis*/
     @GetMapping("/reporteIndicadores")
     public Pageable<List<ReporteEntity>> ListarReporteIndicadores(@RequestParam(required = false) Integer nuIdAlmacen,
                                                                   @RequestParam(required = false) String periodo,
