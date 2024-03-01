@@ -953,4 +953,34 @@ public class RecursoRepositoryImpl extends JdbcDaoSupport implements RecursoRepo
         return pageable;
     }
 
+    @Override
+    public ResultClassEntity<Integer> ActualizarRecursoArchivos(RecursoEntity archivo) {
+
+        execActualizar(archivo);
+        ResultClassEntity<Integer> result = new ResultClassEntity<>();
+        result.setData(archivo.getNuIdArchivoRecurso());
+        result.setSuccess(true);
+        return result;
+    }
+    private void execActualizar(RecursoEntity archivo) {
+        try {
+            StoredProcedureQuery sp = em.createStoredProcedureQuery("almacen.pa_Recurso_Actualizar_Archivos");
+            sp.registerStoredProcedureParameter("nuIdRecurso", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("nuIdRecursoProducto", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("nuIdArchivo", Integer.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("typeAccion", String.class, ParameterMode.IN);
+            sp.registerStoredProcedureParameter("nuIdUsuarioModifica", Integer.class, ParameterMode.IN);
+            SpUtil.enableNullParams(sp);
+            sp.setParameter("nuIdRecurso", archivo.getNuIdRecurso());
+            sp.setParameter("nuIdRecursoProducto", archivo.getNuIdRecursoProducto());
+            sp.setParameter("nuIdArchivo", archivo.getNuIdArchivoRecurso());
+            sp.setParameter("typeAccion", archivo.getTypeAccion());
+            sp.setParameter("nuIdUsuarioModifica", archivo.getNuIdUsuarioModificacion());
+            sp.execute();
+        } catch (Exception e) {
+            log.error("TransferenciRepositoryImpl - execActualizar"+"Ocurrió un error :" + e.getMessage());
+            throw e;
+        }
+    }
+
 }
