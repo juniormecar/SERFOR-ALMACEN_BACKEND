@@ -44,4 +44,7 @@ public class TransferenciaDetalleEntity {
     private String numeroActa;
     private String txCantidadProducto;
 
+    private BigDecimal nuCantidadProductoRet;
+    private BigDecimal nuMetroCubicoRet;
+    private String txEstadoRetorno;
 }

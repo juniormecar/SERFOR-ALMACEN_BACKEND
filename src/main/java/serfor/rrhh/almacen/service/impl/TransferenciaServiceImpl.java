@@ -42,4 +42,9 @@ public class TransferenciaServiceImpl implements TransferenciaService {
     public ResultClassEntity<Integer> ActualizarTransferenciaArchivo(Integer nuIdTransferencia, Integer idArchivo, Integer idUsuario, String typeAccion) {
         return transferenciaRepository.ActualizarTransferenciaArchivo(nuIdTransferencia, idArchivo, idUsuario, typeAccion);
     }
+
+    @Override
+    public ResultClassEntity actualizarTransferencia(List<TransferenciaEntity> transferencia) throws Exception {
+        return transferenciaRepository.actualizarTransferencia(transferencia);
+    }
 }

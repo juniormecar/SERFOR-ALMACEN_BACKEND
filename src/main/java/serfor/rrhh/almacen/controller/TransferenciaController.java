@@ -124,4 +124,24 @@ public class TransferenciaController {
             return new org.springframework.http.ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("")
+    public ResponseEntity actualizarTransferencia(@RequestBody List<TransferenciaEntity> transferencia){
+        log.info("Ingreso al metodo actualizar");
+        ResponseEntity result = null;
+        ResultClassEntity response;
+
+        try{
+            response = transferenciaService.actualizarTransferencia(transferencia);
+            if(response.getSuccess()){
+                log.info("actualizarTransferencia - exitoso");
+                return new ResponseEntity(response,HttpStatus.OK);
+            }else {
+                return new ResponseEntity(response,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            log.error("almacen - actualizarTransferencia", "Ocurrió un error :" + e.getMessage());
+            return new ResponseEntity(null,null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

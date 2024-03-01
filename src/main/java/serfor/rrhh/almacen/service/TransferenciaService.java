@@ -17,4 +17,5 @@ public interface TransferenciaService {
 
     ResultClassEntity<Integer> ActualizarTransferenciaArchivo(Integer nuIdTransferencia, Integer idArchivo, Integer idUsuario, String typeAccion);
 
+    ResultClassEntity actualizarTransferencia(List<TransferenciaEntity> transferencia) throws Exception;
 }

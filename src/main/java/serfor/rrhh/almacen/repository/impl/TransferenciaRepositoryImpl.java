@@ -359,5 +359,99 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
         }
     }
 
+    @Override
+    public ResultClassEntity actualizarTransferencia(List<TransferenciaEntity> transferencia) throws Exception {
+        ResultClassEntity result = new ResultClassEntity();
+        List<TransferenciaEntity> transEntityList = new ArrayList<>();
 
+        try {
+
+            /*** Actualizar Transferencia cabecera***/
+            for(TransferenciaEntity transferenciaEntity: transferencia){
+                StoredProcedureQuery spr = em.createStoredProcedureQuery("almacen.pa_Transferencia_Actualizar");
+                spr.registerStoredProcedureParameter("IdTransferencia", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxNombre", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxApellidos", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxTipoDocumento", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxDocumento", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxNroActa", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("IdRecurso", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxTipoTransferencia", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxEstado", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("IdUsuarioModifica", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxObservaciones", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("IdAlmacen", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxCodigoPuntoControl", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("IdAlmacenOrigin", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxNumeroActaTransferencia", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxNumeroResolucion", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxNumeroActaTraslado", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxFaunaSalida", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("IdArchivo", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("IdArchivoRetorno", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxNumeroActaRetorno", String.class, ParameterMode.IN);
+                setStoreProcedureEnableNullParameters(spr);
+                spr.setParameter("IdTransferencia", transferenciaEntity.getNuIdTransferencia());
+                spr.setParameter("TxNombre", transferenciaEntity.getNombre());
+                spr.setParameter("TxApellidos", transferenciaEntity.getApellidos());
+                spr.setParameter("TxTipoDocumento", transferenciaEntity.getTipoDocumento());
+                spr.setParameter("TxDocumento", transferenciaEntity.getDocumento());
+                spr.setParameter("TxNroActa", transferenciaEntity.getNroActa());
+                spr.setParameter("IdRecurso", transferenciaEntity.getNuIdRecurso());
+                spr.setParameter("TxTipoTransferencia", transferenciaEntity.getTipoTransferencia());
+                spr.setParameter("TxEstado", transferenciaEntity.getEstado());
+                spr.setParameter("IdUsuarioModifica", transferenciaEntity.getNuIdUsuarioModificacion());
+                spr.setParameter("TxObservaciones", transferenciaEntity.getObservaciones());
+                spr.setParameter("IdAlmacen", transferenciaEntity.getNuIdAlmacen());
+                spr.setParameter("TxCodigoPuntoControl", transferenciaEntity.getTxCodigoPuntoControl());
+                spr.setParameter("IdAlmacenOrigin", transferenciaEntity.getNuIdAlmacenOrigin());
+                spr.setParameter("TxNumeroActaTransferencia", transferenciaEntity.getNroActaTransferencia());
+                spr.setParameter("TxNumeroResolucion", transferenciaEntity.getNroResolucion());
+                spr.setParameter("TxNumeroActaTraslado", transferenciaEntity.getNroActaTraslado());
+                spr.setParameter("TxFaunaSalida", transferenciaEntity.getFaunaSalida());
+                spr.setParameter("IdArchivo", transferenciaEntity.getNuIdArchivo());
+                spr.setParameter("IdArchivoRetorno", transferenciaEntity.getNuIdArchivoRetorno());
+                spr.setParameter("TxNumeroActaRetorno", transferenciaEntity.getNroActaRetorno());
+                spr.execute();
+                /* cambio*/
+                for (TransferenciaDetalleEntity trans : transferenciaEntity.getLstTransferenciaDetalle()) {
+                    StoredProcedureQuery srepro = em.createStoredProcedureQuery("almacen.pa_Transferencia_Detalle_Actualizar");
+                    srepro.registerStoredProcedureParameter("IdDetalleTransferencia", Integer.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("IdTransferencia", Integer.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("IdEspecie", Integer.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("CantidadProducto", BigDecimal.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("TxEstado", String.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("IdUsuarioModifica", Integer.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("MetroCubico", BigDecimal.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("CantidadProductoRet", BigDecimal.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("MetroCubicoRet", BigDecimal.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("TxEstadoRetorno", String.class, ParameterMode.IN);
+                    setStoreProcedureEnableNullParameters(srepro);
+                    srepro.setParameter("IdDetalleTransferencia", trans.getNuIdDetTransferencia());
+                    srepro.setParameter("IdTransferencia", transferenciaEntity.getNuIdTransferencia());
+                    srepro.setParameter("IdEspecie", trans.getIdEspecie());
+                    srepro.setParameter("CantidadProducto", trans.getDescontar());
+                    srepro.setParameter("TxEstado", trans.getEstado());
+                    srepro.setParameter("IdUsuarioModifica", trans.getNuIdUsuarioModificacion());
+                    srepro.setParameter("MetroCubico", trans.getDescontarMetroCubico());
+                    srepro.setParameter("CantidadProductoRet", trans.getNuCantidadProductoRet());
+                    srepro.setParameter("MetroCubicoRet", trans.getNuMetroCubicoRet());
+                    srepro.setParameter("TxEstadoRetorno", trans.getTxEstadoRetorno());
+
+                    srepro.execute();
+                }
+            }
+
+            result.setData(transEntityList);
+            result.setSuccess(true);
+            result.setMessage("Se actualizó la transferencia correctamente.");
+
+            return result;
+        } catch (Exception e) {
+            log.error("Transferencia - actualizarTransferencia" + "Ocurrió un error :" + e.getMessage());
+            result.setSuccess(false);
+            result.setMessage("Ocurrió un error.");
+            return result;
+        }
+    }
 }
