@@ -124,5 +124,51 @@ public class ArchivoServiceImpl implements ArchivoService {
             return res;
         }
     }
+    @Override
+    public ResultClassEntity<Integer> registrarMultipleArchivoGeneral(MultipartFile file, Integer IdUsuarioCreacion,
+                                                              String TipoDocumento, String codigo, Integer nuIdArchivo) throws Exception {
 
+        ResultClassEntity<Integer> res = new ResultClassEntity();
+
+        String path = codigo;
+
+        //TODO CARGAFILE
+        //String nombreGenerado = fileCn.uploadFile(file, path);
+        //String nombreGenerado = "CARGA PRUEBA";
+
+        if (file !=null && !file.isEmpty()) {
+            ArchivoEntity archivo = new ArchivoEntity();
+            archivo.setIdUsuarioRegistro(IdUsuarioCreacion);
+            archivo.setTipoDocumento(TipoDocumento);
+            archivo.setEstado("A");
+            archivo.setRuta(fileServerPath + path);
+            archivo.setExtension(file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."),
+                    file.getOriginalFilename().length()));
+            archivo.setNombre(file.getOriginalFilename());
+            //archivo.setNombreGenerado((!nombreGenerado.equals("") ? nombreGenerado : file.getOriginalFilename()));
+            archivo.setFile(file.getBytes());
+            archivo.setType(file.getContentType());
+            archivo.setIdArchivo(nuIdArchivo);
+            archivo.setNombreGenerado(file.getOriginalFilename());
+
+            log.info("ArchivoServiceImpl - RegistrarArchivoGeneral" + archivo.toString());
+            return arRepo.registrarMultipleArchivoGeneral(archivo);
+
+        } else {
+            log.error("ArchivoServiceImpl - RegistrarArchivoGeneral occurrio un error: Archivo no Cargado");
+            res.setMessage("Archivo no Cargado");
+            res.setSuccess(false);
+            return res;
+        }
+    }
+
+    @Override
+    public ResultClassEntity ListarMultiplesArchivosGeneral(Integer nuIdArchivo, Integer nuIdArchivoDet) {
+        return arRepo.ListarMultiplesArchivosGeneral(nuIdArchivo, nuIdArchivoDet);
+    }
+
+    @Override
+    public ResultClassEntity<Integer> EliminarMultiplesArchivos(Integer nuIdArchivoDetalle, Integer idUsuario) {
+        return arRepo.EliminarMultiplesArchivos(nuIdArchivoDetalle, idUsuario);
+    }
 }

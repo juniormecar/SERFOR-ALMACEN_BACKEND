@@ -89,4 +89,9 @@ public class RecursoServiceImpl implements RecursoService {
             throws Exception {
         return recursoRepository.ListarRecursoPersona(nuIdRecurso,tipoPersona,page);
     }
+
+    @Override
+    public ResultClassEntity<Integer> ActualizarRecursoArchivos(RecursoEntity archivo) {
+        return recursoRepository.ActualizarRecursoArchivos(archivo);
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import serfor.rrhh.almacen.entity.*;
+import serfor.rrhh.almacen.repository.util.Constants;
 import serfor.rrhh.almacen.service.RecursoService;
 
 import java.util.Date;
@@ -288,6 +289,26 @@ public class RecursoController {
         }catch (Exception e){
             log.error("RecursoController - listar", "Ocurrió un error :" + e.getMessage());
             throw new Exception(e);
+        }
+    }
+
+    @PutMapping(path = "/actualizarRecursoArchivos")
+    public org.springframework.http.ResponseEntity<ResultClassEntity<Integer>> ActualizarRecursoArchivos(
+            @RequestBody RecursoEntity archivo) {
+        log.info("ArchivoController - ActualizarRecursoArchivos", archivo.getNuIdArchivoRecurso(), archivo.getNuIdUsuarioElimina());
+        ResultClassEntity<Integer> response = new ResultClassEntity<>();
+        try {
+            response = recursoService.ActualizarRecursoArchivos(archivo);
+            if (response.getSuccess()) {
+                log.info("ArchivoController - ActualizarRecursoArchivos", "Proceso realizado correctamente");
+                return new org.springframework.http.ResponseEntity(response, HttpStatus.OK);
+            } else {
+                return new org.springframework.http.ResponseEntity(response, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            log.error("ArchivoController -ActualizarRecursoArchivos", "Ocurrió un error :" + e.getMessage());
+            response.setError(Constants.MESSAGE_ERROR_500, e);
+            return new org.springframework.http.ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

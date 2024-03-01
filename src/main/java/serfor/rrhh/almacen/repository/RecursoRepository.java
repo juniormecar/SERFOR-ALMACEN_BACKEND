@@ -41,5 +41,6 @@ public interface RecursoRepository {
     ResultClassEntity actualizarRecursoEspecie(List<RecursoProductoEntity> list) throws Exception;
 
     Pageable<List<RecursoPersonaEntity>> ListarRecursoPersona(Integer nuIdRecurso,String tipoPersona,Page page) throws Exception;
+    ResultClassEntity<Integer> ActualizarRecursoArchivos(RecursoEntity archivo);
 
 }

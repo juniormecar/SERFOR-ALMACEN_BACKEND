@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class ArchivoEntity {
     private Integer idArchivo;
+    private Integer idArchivoDetalle;
     private String ruta;
     private String nombre;
     private String nombreGenerado;
@@ -27,6 +29,9 @@ public class ArchivoEntity {
     private Integer idRecurso;
     private String estado;
     private String type;
+    private String codigo;
+    private MultipartFile files;
+
 
     // @Column(name = "NU_ID_USUARIO_REGISTRO",  nullable = false)
     private Integer idUsuarioRegistro;

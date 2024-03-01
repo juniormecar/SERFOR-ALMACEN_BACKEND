@@ -36,5 +36,6 @@ public interface RecursoService {
 
     Pageable<List<RecursoPersonaEntity>> ListarRecursoPersona( Integer nuIdRecurso,String tipoPersona,Page page) throws Exception;
 
+    ResultClassEntity<Integer> ActualizarRecursoArchivos(RecursoEntity archivo);
 
 }

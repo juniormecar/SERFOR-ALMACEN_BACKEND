@@ -21,6 +21,25 @@ public class ResultArchivoEntity implements Serializable {
     private String typeFile;
     private String txExtension;
 
+    private Integer nuIdArchivo;
+    private Integer nuIdArchivoDetalle;
+
+    public Integer getNuIdArchivo() {
+        return nuIdArchivo;
+    }
+
+    public void setNuIdArchivo(Integer nuIdArchivo) {
+        this.nuIdArchivo = nuIdArchivo;
+    }
+
+    public Integer getNuIdArchivoDetalle() {
+        return nuIdArchivoDetalle;
+    }
+
+    public void setNuIdArchivoDetalle(Integer nuIdArchivoDetalle) {
+        this.nuIdArchivoDetalle = nuIdArchivoDetalle;
+    }
+
     public String getTypeFile() {
         return typeFile;
     }

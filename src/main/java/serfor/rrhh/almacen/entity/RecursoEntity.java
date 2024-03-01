@@ -71,4 +71,7 @@ public class RecursoEntity {
     private String documentoSesion;
 
     private Integer nuIdArchivoRecurso;
+    private String typeAccion;
+    private Integer nuIdRecursoProducto;
+
 }
