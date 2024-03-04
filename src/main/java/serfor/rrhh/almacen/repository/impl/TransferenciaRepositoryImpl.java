@@ -372,7 +372,7 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                 spr.registerStoredProcedureParameter("IdTransferencia", Integer.class, ParameterMode.IN);
                 spr.registerStoredProcedureParameter("TxNombre", String.class, ParameterMode.IN);
                 spr.registerStoredProcedureParameter("TxApellidos", String.class, ParameterMode.IN);
-                spr.registerStoredProcedureParameter("TxTipoDocumento", Integer.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("TxTipoDocumento", String.class, ParameterMode.IN);
                 spr.registerStoredProcedureParameter("TxDocumento", String.class, ParameterMode.IN);
                 spr.registerStoredProcedureParameter("TxNroActa", String.class, ParameterMode.IN);
                 spr.registerStoredProcedureParameter("IdRecurso", Integer.class, ParameterMode.IN);
@@ -419,7 +419,7 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                     srepro.registerStoredProcedureParameter("IdDetalleTransferencia", Integer.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("IdTransferencia", Integer.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("IdEspecie", Integer.class, ParameterMode.IN);
-                    srepro.registerStoredProcedureParameter("CantidadProducto", BigDecimal.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("CantidadProducto", String.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("TxEstado", String.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("IdUsuarioModifica", Integer.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("MetroCubico", BigDecimal.class, ParameterMode.IN);
@@ -430,7 +430,7 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                     srepro.setParameter("IdDetalleTransferencia", trans.getNuIdDetTransferencia());
                     srepro.setParameter("IdTransferencia", transferenciaEntity.getNuIdTransferencia());
                     srepro.setParameter("IdEspecie", trans.getIdEspecie());
-                    srepro.setParameter("CantidadProducto", trans.getDescontar());
+                    srepro.setParameter("CantidadProducto", trans.getTxCantidadProducto());
                     srepro.setParameter("TxEstado", trans.getEstado());
                     srepro.setParameter("IdUsuarioModifica", trans.getNuIdUsuarioModificacion());
                     srepro.setParameter("MetroCubico", trans.getDescontarMetroCubico());

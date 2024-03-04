@@ -76,6 +76,7 @@ public class RecursoProductoEntity {
     private Integer nuIdArchivoRecursoProducto;
 
     private String txObservaciones;
+    private Integer nuIdDetTransferencia;
 
     ;
 
