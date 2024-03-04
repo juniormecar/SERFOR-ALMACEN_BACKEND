@@ -136,7 +136,20 @@ public class ActaSalidaServiceImpl implements ActaSalidaService {
                 preface2.setAlignment(Element.ALIGN_JUSTIFIED);
                 addEmptyLine(preface2, 1);
                 document.add(preface2);
+            }else if(transferencia.get(0).getTipoTransferencia().equals("TPTRANS003")){
+
+                AlmacenEntity almacen2 = almacenService.getAlmacen(transferencia.get(0).getNuIdAlmacen());
+                PdfPTable table21 = createMonitoreoTrans01(writer,transferencia);
+                document.add(table21);
+                document.add(new Paragraph("\n"));
+                Paragraph preface2 = new Paragraph();
+                preface2.add(new Paragraph("En calidad de transferencia, al almacen "+almacen2.getTxNombreAlmacen()
+                        +  ". Quien recoge y traslada los productos para ser utilizado en dicho almacen ", subTituloTabla));
+                preface2.setAlignment(Element.ALIGN_JUSTIFIED);
+                addEmptyLine(preface2, 1);
+                document.add(preface2);
             }
+
 
             Paragraph preface4 = new Paragraph();
             preface4.add(new Paragraph(" Siendo las " +this.format(dateNow,"HH:mm")+" horas del mismo día, en señal de conformidad firman", subTituloTabla));
