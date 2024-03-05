@@ -81,4 +81,7 @@ public class ReporteEntity {
 
     private Integer nuIdTransferenciaDetalle;
     public String nroResolucion;
+
+    private Date fechaTransferencia;
+    public String horaTransferencia;
 }

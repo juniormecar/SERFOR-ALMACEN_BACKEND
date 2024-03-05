@@ -122,6 +122,8 @@ public class ReporteRepositoryImpl extends JdbcDaoSupport implements ReporteRepo
             item.setNuIdArchivoTransferencia((Integer) row[30]);
             item.setNuIdTransferenciaDetalle((Integer) row[31]);
             item.setNroResolucion((String) row[32]);
+            item.setFechaTransferencia((Date) row[33]);
+            item.setHoraTransferencia((String) row[34]);
             items.add(item);
             pageable.setTotalRecords(SpUtil.toLong(row[21]));
 
