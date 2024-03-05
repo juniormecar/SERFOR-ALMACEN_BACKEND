@@ -101,7 +101,7 @@ public class ActaSalidaServiceImpl implements ActaSalidaService {
             Paragraph preface = new Paragraph();
             preface.add(new Paragraph("En el almacén del Puesto de Control Forestal y de Fauna silvestre "+transferencia.get(0).getLstTransferenciaDetalle().get(0).getNombreAlmacen()
                                       +  ", ubicado en "+almacen.getDireccionAlmacen()+", Distrito de "+almacen.getDepartamento()+", Provincia de "+almacen.getProvincia()+", Distrito de "+almacen.getDistrito()+
-                                         ", siendo las "+this.format(dateNow,"HH:mm")+" horas, del día "+this.format(dateNow,"dd")+" de "+this.retomaMes(Integer.parseInt(this.format(dateNow,"MM")))
+                                         ", siendo las "+transferencia.get(0).getHoraTransferencia()+" horas, del día "+this.format(transferencia.get(0).getFechaTransferencia(),"dd")+" de "+this.retomaMes(Integer.parseInt(this.format(transferencia.get(0).getFechaTransferencia(),"MM")))
                                       +  " del "+this.format(dateNow,"YYYY"), subTituloTabla));
             preface.setAlignment(Element.ALIGN_JUSTIFIED);
             addEmptyLine(preface, 1);
@@ -152,7 +152,7 @@ public class ActaSalidaServiceImpl implements ActaSalidaService {
 
 
             Paragraph preface4 = new Paragraph();
-            preface4.add(new Paragraph(" Siendo las " +this.format(dateNow,"HH:mm")+" horas del mismo día, en señal de conformidad firman", subTituloTabla));
+            preface4.add(new Paragraph(" Siendo las " +transferencia.get(0).getHoraTransferencia()+" horas del mismo día, en señal de conformidad firman", subTituloTabla));
             preface4.setAlignment(Element.ALIGN_JUSTIFIED);
             addEmptyLine(preface4, 6);
             document.add(preface4);

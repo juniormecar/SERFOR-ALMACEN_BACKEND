@@ -58,4 +58,7 @@ public class TransferenciaEntity {
     private String typeAccion;
     private Integer nuIdArchivoRetorno;
     private String nroActaRetorno;
+
+    private Date fechaTransferencia;
+    private String horaTransferencia;
 }

@@ -69,6 +69,8 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                 spr.registerStoredProcedureParameter("nuResolucion", String.class, ParameterMode.IN);
                 spr.registerStoredProcedureParameter("nroActaTraslado", String.class, ParameterMode.IN);
                 spr.registerStoredProcedureParameter("faunaSalida", String.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("fechaTransferencia", Date.class, ParameterMode.IN);
+                spr.registerStoredProcedureParameter("horaTransferencia", String.class, ParameterMode.IN);
                 setStoreProcedureEnableNullParameters(spr);
                 spr.setParameter("nuIdRecurso", transferenciaEntity.getNuIdRecurso());
                 spr.setParameter("tipoTransferencia", transferenciaEntity.getTipoTransferencia());
@@ -86,6 +88,8 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                 spr.setParameter("nuResolucion", transferenciaEntity.getNroResolucion());
                 spr.setParameter("nroActaTraslado", transferenciaEntity.getNroActaTraslado());
                 spr.setParameter("faunaSalida", transferenciaEntity.getFaunaSalida());
+                spr.setParameter("fechaTransferencia", transferenciaEntity.getFechaTransferencia());
+                spr.setParameter("horaTransferencia", transferenciaEntity.getHoraTransferencia());
                 spr.execute();
                 Integer idTransferenciaReturn = (Integer) spr.getOutputParameterValue("nuIdTransferencia");
                 Integer idRecursoHijoReturn = (Integer) spr.getOutputParameterValue("nuIdRecursoHijo");
