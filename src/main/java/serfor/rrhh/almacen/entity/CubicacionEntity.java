@@ -16,7 +16,7 @@ import java.util.Date;
 public class CubicacionEntity {
 
     private Integer idRecurProCubicacion;
-    private Integer cantidad;
+    private BigDecimal cantidad;
     private BigDecimal espesor;
     private BigDecimal ancho;
     private BigDecimal largo;
