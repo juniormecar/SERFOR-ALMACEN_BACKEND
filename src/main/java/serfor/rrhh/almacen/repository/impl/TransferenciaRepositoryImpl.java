@@ -430,6 +430,9 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                     srepro.registerStoredProcedureParameter("CantidadProductoRet", BigDecimal.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("MetroCubicoRet", BigDecimal.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("TxEstadoRetorno", String.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("nombreCientifico", String.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("nombreComun", String.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("nuIdRecursoProducto", Integer.class, ParameterMode.IN);
                     setStoreProcedureEnableNullParameters(srepro);
                     srepro.setParameter("IdDetalleTransferencia", trans.getNuIdDetTransferencia());
                     srepro.setParameter("IdTransferencia", transferenciaEntity.getNuIdTransferencia());
@@ -437,10 +440,13 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                     srepro.setParameter("CantidadProducto", trans.getTxCantidadProducto());
                     srepro.setParameter("TxEstado", trans.getEstado());
                     srepro.setParameter("IdUsuarioModifica", trans.getNuIdUsuarioModificacion());
-                    srepro.setParameter("MetroCubico", trans.getDescontarMetroCubico());
+                    srepro.setParameter("MetroCubico", trans.getMetroCubico());
                     srepro.setParameter("CantidadProductoRet", trans.getNuCantidadProductoRet());
                     srepro.setParameter("MetroCubicoRet", trans.getNuMetroCubicoRet());
                     srepro.setParameter("TxEstadoRetorno", trans.getTxEstadoRetorno());
+                    srepro.setParameter("nombreCientifico", trans.getNombreCientifico());
+                    srepro.setParameter("nombreComun", trans.getNombreComun());
+                    srepro.setParameter("nuIdRecursoProducto", trans.getNuIdRecursoProducto());
 
                     srepro.execute();
                 }
