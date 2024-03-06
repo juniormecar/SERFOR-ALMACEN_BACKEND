@@ -79,7 +79,9 @@ public class ActaSalidaServiceImpl implements ActaSalidaService {
             Date dateNow = new Date();
 
             AlmacenEntity almacen = almacenService.getAlmacen(transferencia.get(0).getNuIdAlmacenOrigin());
-            Image imagen = Image.getInstance("largologo.jpg");
+            //Image imagen = Image.getInstance("largologo.jpg");
+            ClassLoader classLoader = getClass().getClassLoader();
+            Image imagen = Image.getInstance(classLoader.getResource("largologo.jpg"));
 
             document.open();
 
