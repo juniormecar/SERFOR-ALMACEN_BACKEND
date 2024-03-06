@@ -46,7 +46,7 @@ public class CubicacionRepositoryImpl extends JdbcDaoSupport implements Cubicaci
             for(CubicacionEntity cubicacion:lstCubicacion ){
                 /*** Registrar Cubicacion***/
                 StoredProcedureQuery spa = em.createStoredProcedureQuery("almacen.pa_Recurso_Producto_Cubicacion_Registrar");
-                spa.registerStoredProcedureParameter("Cantidad", Integer.class, ParameterMode.IN);
+                spa.registerStoredProcedureParameter("Cantidad", BigDecimal.class, ParameterMode.IN);
                 spa.registerStoredProcedureParameter("Espesor", BigDecimal.class, ParameterMode.IN);
                 spa.registerStoredProcedureParameter("Ancho", BigDecimal.class, ParameterMode.IN);
                 spa.registerStoredProcedureParameter("Largo", BigDecimal.class, ParameterMode.IN);
@@ -141,7 +141,7 @@ public class CubicacionRepositoryImpl extends JdbcDaoSupport implements Cubicaci
         List<CubicacionEntity> items = new ArrayList<>();
         for (Object[] row : dataDb) {
             CubicacionEntity item = new CubicacionEntity();
-            item.setCantidad((Integer) row[0]);
+            item.setCantidad((BigDecimal) row[0]);
             item.setEspesor((BigDecimal) row[1]);
             item.setAncho((BigDecimal) row[2]);
             item.setLargo((BigDecimal) row[3]);
@@ -164,7 +164,7 @@ public class CubicacionRepositoryImpl extends JdbcDaoSupport implements Cubicaci
         List<CubicacionEntity> items = new ArrayList<>();
         for (Object[] row : dataDb) {
             CubicacionEntity item = new CubicacionEntity();
-            item.setCantidad((Integer) row[0]);
+            item.setCantidad((BigDecimal) row[0]);
             item.setEspesor((BigDecimal) row[1]);
             item.setAncho((BigDecimal) row[2]);
             item.setLargo((BigDecimal) row[3]);
