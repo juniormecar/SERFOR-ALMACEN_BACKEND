@@ -433,6 +433,8 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                     srepro.registerStoredProcedureParameter("nombreCientifico", String.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("nombreComun", String.class, ParameterMode.IN);
                     srepro.registerStoredProcedureParameter("nuIdRecursoProducto", Integer.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("tipoProducto", String.class, ParameterMode.IN);
+                    srepro.registerStoredProcedureParameter("cantidadTotal", BigDecimal.class, ParameterMode.IN);
                     setStoreProcedureEnableNullParameters(srepro);
                     srepro.setParameter("IdDetalleTransferencia", trans.getNuIdDetTransferencia());
                     srepro.setParameter("IdTransferencia", transferenciaEntity.getNuIdTransferencia());
@@ -447,6 +449,8 @@ public class TransferenciaRepositoryImpl extends JdbcDaoSupport implements Trans
                     srepro.setParameter("nombreCientifico", trans.getNombreCientifico());
                     srepro.setParameter("nombreComun", trans.getNombreComun());
                     srepro.setParameter("nuIdRecursoProducto", trans.getNuIdRecursoProducto());
+                    srepro.setParameter("tipoProducto", trans.getTipo());
+                    srepro.setParameter("cantidadTotal", trans.getCantidadTotal());
 
                     srepro.execute();
                 }
