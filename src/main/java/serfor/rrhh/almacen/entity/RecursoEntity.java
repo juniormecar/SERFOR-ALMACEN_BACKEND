@@ -38,6 +38,8 @@ public class RecursoEntity {
     private Character txEstadoRecurso;
     private Integer nuIdAlmacen;
     private String numeroActa;
+    private Integer flgValidaPAS;
+
     private String tipoDocumento;
     private String numeroDocumento;
 
